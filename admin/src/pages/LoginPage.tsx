@@ -26,16 +26,20 @@ export default function LoginPage() {
       const data = await res.json();
       localStorage.setItem("token", data.token);
       navigate("/users");
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Ошибка входа");
+      }
     }
   };
 
   return (
-    <div className="flex h-screen w-screen items-center justify-center bg-gray-50 p-6">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-8 px-4">
       <form
         onSubmit={handleLogin}
-        className="w-full max-w-sm bg-white rounded-xl shadow-lg border border-gray-200 p-10 flex flex-col gap-8"
+        className="w-full max-w-md bg-white rounded-xl shadow-lg border border-gray-200 p-10 flex flex-col gap-8"
         style={{ minWidth: 320 }}
       >
         <h2 className="text-3xl font-semibold text-center text-gray-900 mb-4">

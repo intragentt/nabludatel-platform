@@ -37,40 +37,42 @@ const Layout = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="bg-gray-800 text-white p-4 flex items-center justify-between">
-        <h1
-          className="text-xl font-bold cursor-pointer"
-          onClick={() => navigate("/")}
-        >
-          Admin Panel
-        </h1>
+      <header className="bg-gray-800 text-white p-4">
+        <div className="flex items-center justify-between w-full max-w-7xl mx-auto">
+          <h1
+            className="text-xl font-bold cursor-pointer"
+            onClick={() => navigate("/")}
+          >
+            Admin Panel
+          </h1>
 
-        <nav className="space-x-4">
-          {links.map(({ to, label }) => (
-            <button
-              key={to}
-              onClick={() => navigate(to)}
-              className={`px-3 py-1 rounded ${
-                location.pathname === to ? "bg-gray-700" : "hover:bg-gray-700"
-              }`}
-            >
-              {label}
-            </button>
-          ))}
-        </nav>
+          <nav className="space-x-4">
+            {links.map(({ to, label }) => (
+              <button
+                key={to}
+                onClick={() => navigate(to)}
+                className={`px-3 py-1 rounded ${
+                  location.pathname === to ? "bg-gray-700" : "hover:bg-gray-700"
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+          </nav>
 
-        <button
-          onClick={() => {
-            localStorage.removeItem("role");
-            navigate("/login");
-          }}
-          className="bg-red-600 px-3 py-1 rounded hover:bg-red-700"
-        >
-          Выйти
-        </button>
+          <button
+            onClick={() => {
+              localStorage.removeItem("role");
+              navigate("/login");
+            }}
+            className="bg-red-600 px-3 py-1 rounded hover:bg-red-700"
+          >
+            Выйти
+          </button>
+        </div>
       </header>
 
-      <main className="flex-grow bg-gray-100 p-6">
+      <main className="flex-grow bg-gray-100 p-6 w-full max-w-7xl mx-auto">
         <Outlet />
       </main>
 

@@ -10,7 +10,7 @@
   --font-body: 'Manrope', sans-serif;
   --font-mono: 'PT Mono', monospace;
 
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: var(--font-body), sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
