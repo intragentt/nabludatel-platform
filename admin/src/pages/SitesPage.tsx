@@ -48,7 +48,7 @@ export default function SitesPage() {
 
       const data = await res.json();
       setSites(data);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Ошибка при загрузке сайтов:", err);
       setError(err.message || "Не удалось загрузить список сайтов");
     } finally {
@@ -97,7 +97,7 @@ export default function SitesPage() {
         )
       );
       alert(`Статус сайта ${siteId} изменен на ${newStatus}`); // Временное уведомление
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Ошибка при изменении статуса:", err);
       alert(err.message || "Не удалось изменить статус сайта"); // Временное уведомление
     }
@@ -112,7 +112,7 @@ export default function SitesPage() {
   }
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
+    <div className="container mx-auto max-w-4xl p-6 font-sans">
       <h1 className="text-3xl font-bold mb-6 text-gray-800">
         Управление Сайтами
       </h1>
@@ -124,19 +124,19 @@ export default function SitesPage() {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">
                   Название
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">
                   Домен
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">
                   План
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">
                   Статус
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">
                   Действия
                 </th>
               </tr>
@@ -157,8 +157,8 @@ export default function SitesPage() {
                     <span
                       className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
                         site.status === "active"
-                          ? "bg-green-100 text-green-800"
-                          : "bg-red-100 text-red-800"
+                          ? "bg-green-50 text-green-700"
+                          : "bg-red-50 text-red-700"
                       }`}
                     >
                       {site.status === "active" ? "Активен" : "Отключен"}
