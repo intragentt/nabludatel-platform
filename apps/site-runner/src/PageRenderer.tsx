@@ -1,28 +1,7 @@
 // apps/site-runner/src/PageRenderer.tsx
 import React from "react";
 import { Header, CatalogContent } from "@nabludatel/ui";
-
-// Определим базовые типы (в будущем вынесем в packages/core)
-interface Product {
-  id: string;
-  name: string;
-  price: number;
-  imageUrl1: string;
-}
-interface ComponentInstance {
-  id: string;
-  type: string;
-  props: any;
-}
-interface Page {
-  id: string;
-  title: string;
-  components: ComponentInstance[];
-}
-interface Site {
-  id: string;
-  name: string;
-}
+import type { Product, Page, Site } from "@nabludatel/core";
 
 // Карта компонентов
 const componentsMap: { [key: string]: React.ComponentType<any> } = {

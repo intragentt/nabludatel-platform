@@ -1,7 +1,4 @@
 // Местоположение: src/components/ProductCard.tsx
-"use client";
-
-import { useState, useEffect } from "react";
 import { formatPrice, PriceParts } from "./utils/formatPrice";
 import ImagePlaceholder from "./ImagePlaceholder";
 import HeartIcon from "./icons/HeartIcon";
@@ -19,20 +16,8 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const [isLiked, setIsLiked] = useState(false);
-  const [img1Error, setImg1Error] = useState(false);
-  const [img2Error, setImg2Error] = useState(false);
-
-  useEffect(() => {
-    const savedLiked = localStorage.getItem(`liked-${product.id}`);
-    if (savedLiked === "true") {
-      setIsLiked(true);
-    }
-  }, [product.id]);
-
-  useEffect(() => {
-    localStorage.setItem(`liked-${product.id}`, String(isLiked));
-  }, [isLiked, product.id]);
+  const img1Error = false;
+  const img2Error = false;
 
   const imageUrl1 = product.imageUrls?.[0];
   const imageUrl2 = product.imageUrls?.[1];
@@ -56,7 +41,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               src={imageUrl1}
               alt={`${product.name} - фото 1`}
               className="object-cover absolute inset-0 w-full h-full"
-              onError={() => setImg1Error(true)}
+              onError={() => {}}
             />
           )}
         </div>
@@ -67,7 +52,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               src={imageUrl2}
               alt={`${product.name} - фото 2`}
               className="object-cover absolute inset-0 w-full h-full"
-              onError={() => setImg2Error(true)}
+              onError={() => {}}
             />
           )}
         </div>
@@ -96,20 +81,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
 
         <div className="absolute right-1 bottom-1 overflow-visible sm:right-2 sm:bottom-2">
-          <button
-            aria-label="Добавить в избранное"
-            className="flex h-10 w-10 items-center justify-center transition-all duration-300 ease-in-out"
-            onClick={(e) => {
-              e.preventDefault();
-              setIsLiked(!isLiked);
-            }}
-          >
-            <HeartIcon
-              filled={isLiked}
-              className="h-6 w-6"
-              style={{ color: isLiked ? "#D32F2F" : "#272727" }}
-            />
-          </button>
+          <HeartIcon className="h-6 w-6 text-gray-400" />
         </div>
       </div>
     </a>

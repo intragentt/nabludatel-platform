@@ -12,7 +12,9 @@
     "paths": {
       "@nabludatel/*": ["packages/*"],
       "@nabludatel/ui": ["packages/ui/src"],
-      "@nabludatel/ui/*": ["packages/ui/src/*"]
+      "@nabludatel/ui/*": ["packages/ui/src/*"],
+      "@nabludatel/core": ["packages/core/src"],
+      "@nabludatel/core/*": ["packages/core/src/*"]
     }
   },
   "include": ["backend/**/*"],
