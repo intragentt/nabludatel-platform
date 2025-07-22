@@ -8,7 +8,7 @@ import authRouter from "./routes/auth";
 import { requireAuth } from "./middlewares/authMiddleware";
 
 const app = express();
-const PORT = 3001;
+const PORT = Number(process.env.PORT) || 3001;
 
 // Разрешаем CORS
 app.use(
