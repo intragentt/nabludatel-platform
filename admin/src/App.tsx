@@ -5,10 +5,10 @@ import { Route, Routes, BrowserRouter } from "react-router-dom";
 import Layout from "./components/Layout";
 
 // Страницы админки
-import DashboardPage from "./pages/Dashboard";
 import UsersPage from "./pages/Users";
 import SettingsPage from "./pages/SettingsPage";
 import LoginPage from "./pages/LoginPage";
+import SitesPage from "./pages/SitesPage";
 
 // Входная точка приложения админки
 function App() {
@@ -17,8 +17,10 @@ function App() {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route element={<Layout />}>
-          <Route path="/" element={<DashboardPage />} /> {/* Главная */}
+          <Route path="/" element={<SitesPage />} />{" "}
+          {/* Главная — теперь SitesPage */}
           <Route path="/users" element={<UsersPage />} /> {/* Пользователи */}
+          <Route path="/sites" element={<SitesPage />} /> {/* Сайты */}
           <Route path="/settings" element={<SettingsPage />} />{" "}
           {/* Настройки */}
         </Route>

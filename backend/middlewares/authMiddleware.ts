@@ -55,3 +55,5 @@ export function requireRole(requiredRole: string) {
     next();
   };
 }
+
+export const ensureSuperAdmin = requireRole("superadmin");

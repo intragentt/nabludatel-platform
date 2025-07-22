@@ -5,7 +5,8 @@ import path from "path";
 import usersRouter from "./routes/users";
 import uploadRouter from "./routes/upload";
 import authRouter from "./routes/auth";
-import { requireAuth } from "./middlewares/authMiddleware";
+import sitesRouter from "./routes/sites";
+import { requireAuth, ensureSuperAdmin } from "./middlewares/authMiddleware";
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3001;
@@ -28,6 +29,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 // Защищённые маршруты с requireAuth
 app.use("/api/users", requireAuth, usersRouter);
 app.use("/api/upload", requireAuth, uploadRouter);
+app.use("/api/sites", requireAuth, sitesRouter);
 app.use("/api/auth", authRouter);
 
 // Публичные маршруты (например, для логина/регистрации) можно добавить отдельно без requireAuth
