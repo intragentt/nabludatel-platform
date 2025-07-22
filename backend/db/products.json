@@ -1,0 +1,36 @@
+[
+  {
+    "id": "1",
+    "siteId": "kyanchir-site-id",
+    "name": "Классическая футболка",
+    "price": 31990,
+    "oldPrice": 51990,
+    "imageUrl1": "/Фото - 1.png",
+    "imageUrl2": "/Фото - 2.png",
+    "isNew": true,
+    "discountPercentage": 33,
+    "sku": "SKU001",
+    "color": "белый",
+    "composition": "100% хлопок",
+    "description": "Мягкая базовая футболка",
+    "isBestseller": true,
+    "inventory": 25
+  },
+  {
+    "id": "2",
+    "siteId": "kyanchir-site-id",
+    "name": "Свободный свитер",
+    "price": 7990,
+    "oldPrice": 9990,
+    "imageUrl1": "/Фото - 2.png",
+    "imageUrl2": "/Фото - 3.png",
+    "isNew": true,
+    "discountPercentage": 20,
+    "sku": "SKU002",
+    "color": "серый",
+    "composition": "60% шерсть, 40% акрил",
+    "description": "Теплый oversize свитер",
+    "isBestseller": false,
+    "inventory": 15
+  }
+] 

@@ -5,8 +5,10 @@ import path from "path";
 import usersRouter from "./routes/users";
 import uploadRouter from "./routes/upload";
 import authRouter from "./routes/auth";
-import sitesRouter from "./routes/sites";
-import { requireAuth, ensureSuperAdmin } from "./middlewares/authMiddleware";
+import { publicSitesRouter, adminSitesRouter } from "./routes/sites";
+import productsRouter from "./routes/products";
+import pagesRouter from "./routes/pages";
+import { requireAuth } from "./middlewares/authMiddleware";
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3001;
@@ -26,14 +28,16 @@ app.use(express.json());
 // Раздача статики для загруженных файлов
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-// Защищённые маршруты с requireAuth
+// ПУБЛИЧНЫЕ МАРШРУТЫ (не требуют JWT)
+app.use("/api/auth", authRouter);
+app.use("/api/sites", publicSitesRouter); // <-- Для публичной инфы о сайте
+app.use("/api/sites", pagesRouter); // <-- Для публичных страниц
+app.use("/api/sites", productsRouter); // <-- Для публичных продуктов
+
+// ЗАЩИЩЕННЫЕ МАРШРУТЫ (требуют JWT)
 app.use("/api/users", requireAuth, usersRouter);
 app.use("/api/upload", requireAuth, uploadRouter);
-app.use("/api/sites", requireAuth, sitesRouter);
-app.use("/api/auth", authRouter);
-
-// Публичные маршруты (например, для логина/регистрации) можно добавить отдельно без requireAuth
-// app.use("/api/auth", authRouter);
+app.use("/api/admin/sites", requireAuth, adminSitesRouter); // <-- Для админки, с префиксом /admin
 
 // Обработка 404 - неизвестных маршрутов
 app.use((req, res) => {

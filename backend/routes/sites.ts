@@ -1,28 +1,43 @@
 import { Router } from "express";
 import { readFileSync, writeFileSync } from "fs";
 import { resolve } from "path";
-import {
-  ensureSuperAdmin,
-  requireAuth,
-  ensureSiteAccess,
-} from "../middlewares/authMiddleware";
+import { ensureSuperAdmin } from "../middlewares/authMiddleware";
 
-const router = Router();
+export const publicSitesRouter = Router(); // <-- Новый публичный роутер
+export const adminSitesRouter = Router(); // <-- Старый роутер для админки
+
 const sitesFilePath = resolve(__dirname, "../db/sites.json");
 
-// GET /api/sites - Получить список всех сайтов (только для superadmin)
-router.get("/", ensureSuperAdmin, (req, res) => {
+// --- ПУБЛИЧНЫЕ МАРШРУТЫ ---
+// GET /api/sites/:id - Получить публичную информацию о сайте
+publicSitesRouter.get("/:id", (req, res) => {
+  const siteId = req.params.id;
+  try {
+    const sites = JSON.parse(readFileSync(sitesFilePath, "utf-8"));
+    const site = sites.find((s: any) => s.id === siteId);
+    if (site) {
+      res.json(site);
+    } else {
+      res.status(404).json({ error: "Сайт не найден" });
+    }
+  } catch (e) {
+    res.status(500).json({ error: "Не удалось загрузить сайт" });
+  }
+});
+
+// --- МАРШРУТЫ ДЛЯ АДМИНКИ (ЗАЩИЩЕННЫЕ) ---
+// GET /api/admin/sites - Получить список всех сайтов
+adminSitesRouter.get("/", ensureSuperAdmin, (req, res) => {
   try {
     const sites = JSON.parse(readFileSync(sitesFilePath, "utf-8"));
     res.json(sites);
   } catch (e) {
-    console.error("Ошибка чтения sites.json:", e);
     res.status(500).json({ error: "Не удалось загрузить сайты" });
   }
 });
 
-// PUT /api/sites/:id/status - Обновить статус сайта (только для superadmin)
-router.put("/:id/status", ensureSuperAdmin, (req, res) => {
+// PUT /api/admin/sites/:id/status - Обновить статус
+adminSitesRouter.put("/:id/status", ensureSuperAdmin, (req, res) => {
   const siteId = req.params.id;
   const { status } = req.body;
 
@@ -57,5 +72,3 @@ router.put("/:id/status", ensureSuperAdmin, (req, res) => {
       .json({ error: "Ошибка сервера при обновлении статуса сайта" });
   }
 });
-
-export default router;

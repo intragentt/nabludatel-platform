@@ -55,8 +55,8 @@ const Layout = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col font-sans">
-      <header className="bg-gray-800 text-white h-16 px-6 flex items-center justify-between">
+    <div className="min-h-screen flex flex-col font-sans w-full">
+      <header className="bg-gray-800 text-white p-4 flex items-center justify-between">
         <h1
           className="text-xl font-bold cursor-pointer"
           onClick={() => navigate("/")}
@@ -90,13 +90,11 @@ const Layout = () => {
         </button>
       </header>
 
-      <main className="flex-grow bg-gray-100">
-        <div className="max-w-7xl mx-auto p-6">
-          <Outlet />
-        </div>
+      <main className="flex-grow bg-gray-100 p-6">
+        <Outlet />
       </main>
 
-      <footer className="bg-gray-800 text-white h-12 flex items-center justify-center text-sm">
+      <footer className="bg-gray-800 text-white p-4 text-center">
         © 2025 nabludatel.core
       </footer>
     </div>

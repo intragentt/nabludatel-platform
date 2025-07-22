@@ -1,0 +1,45 @@
+[
+  {
+    "id": "kyanchir-homepage-uuid",
+    "siteId": "kyanchir-site-id",
+    "title": "Главная",
+    "slug": "home",
+    "components": [
+      {
+        "id": "comp-header-uuid",
+        "type": "Header",
+        "props": {
+          "navigationLinks": [
+            { "href": "/", "label": "Главная" },
+            { "href": "/catalog", "label": "Каталог" },
+            { "href": "/about", "label": "О нас" }
+          ]
+        }
+      },
+      {
+        "id": "comp-hero-uuid",
+        "type": "HeroSection",
+        "props": {
+          "title": "Добро пожаловать в Kyanchir",
+          "subtitle": "Ваш бутик эмоций",
+          "imageUrl": "/hero-image.png"
+        }
+      },
+      {
+        "id": "comp-catalog-uuid",
+        "type": "CatalogContent",
+        "props": {}
+      },
+      {
+        "id": "comp-footer-uuid",
+        "type": "Footer",
+        "props": {
+          "copyright": "© 2025 Kyanchir"
+        }
+      }
+    ],
+    "status": "published",
+    "createdAt": "2024-07-23T12:00:00Z",
+    "updatedAt": "2024-07-23T12:00:00Z"
+  }
+] 
