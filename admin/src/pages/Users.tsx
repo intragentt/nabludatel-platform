@@ -105,8 +105,12 @@ export default function UsersPage() {
       const data = await res.json();
       setUsers(data);
       setError("");
-    } catch (err: any) {
-      setError(err.message || "Ошибка загрузки пользователей");
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message || "Ошибка загрузки пользователей");
+      } else {
+        setError("Ошибка загрузки пользователей");
+      }
       console.error(err);
     }
   };
@@ -161,8 +165,12 @@ export default function UsersPage() {
       fetchUsers();
       markClean();
       setError("");
-    } catch (err: any) {
-      setError(err.message || "Ошибка добавления пользователя");
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message || "Ошибка добавления пользователя");
+      } else {
+        setError("Ошибка добавления пользователя");
+      }
       console.error(err);
     }
   };
@@ -178,8 +186,12 @@ export default function UsersPage() {
         throw new Error("Ошибка удаления пользователя: " + res.status);
       setUsers((prev) => prev.filter((u) => u.id !== id));
       setError("");
-    } catch (err: any) {
-      setError(err.message || "Ошибка удаления пользователя");
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message || "Ошибка удаления пользователя");
+      } else {
+        setError("Ошибка удаления пользователя");
+      }
       console.error(err);
     }
   };
