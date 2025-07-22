@@ -1,11 +1,10 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "module": "CommonJS",
     "outDir": "dist",
-    "jsx": "react-jsx",
-    "esModuleInterop": true
+    "declaration": true,
+    "emitDeclarationOnly": false
   },
-  "include": ["src/**/*"],
+  "include": ["src"],
   "exclude": ["node_modules", "dist"]
-} 
+}
