@@ -36,10 +36,10 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-8 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
       <form
         onSubmit={handleLogin}
-        className="w-full max-w-md bg-white rounded-xl shadow-lg border border-gray-200 p-10 flex flex-col gap-8"
+        className="mx-auto w-full max-w-md bg-white rounded-xl shadow-lg border border-gray-200 p-10 flex flex-col gap-8 font-sans"
         style={{ minWidth: 320 }}
       >
         <h2 className="text-3xl font-semibold text-center text-gray-900 mb-4">
