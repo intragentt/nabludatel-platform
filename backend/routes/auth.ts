@@ -4,7 +4,7 @@ import express from "express";
 import { readFileSync, writeFileSync } from "fs";
 import { resolve } from "path";
 import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 const router = express.Router();
 const filePath = resolve(__dirname, "../db/users.json");

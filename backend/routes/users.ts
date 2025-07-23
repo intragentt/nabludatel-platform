@@ -8,7 +8,7 @@ import {
   closeSync,
 } from "fs";
 import { resolve } from "path";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { requireRole } from "../middlewares/authMiddleware";
 
 const router = Router();
