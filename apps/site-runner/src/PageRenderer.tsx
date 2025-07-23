@@ -1,7 +1,7 @@
 // apps/site-runner/src/PageRenderer.tsx
 import React from "react";
-import { Header, CatalogContent } from "@nabludatel/ui";
-import type { Product, Page, Site } from "@nabludatel/core";
+import { Header, CatalogContent } from "../../../packages/ui/src/index";
+import type { Product, Page, Site } from "../../../packages/core/src/index";
 
 // Карта компонентов
 const componentsMap: { [key: string]: React.ComponentType<any> } = {

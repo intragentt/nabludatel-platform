@@ -1,0 +1,5 @@
+
+
+> site-runner@0.0.1 build /Users/intragentt/nabludatel.core/apps/site-runner
+> tsc --project tsconfig.json
+

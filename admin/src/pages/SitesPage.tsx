@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 interface Site {
@@ -48,9 +48,13 @@ export default function SitesPage() {
 
       const data = await res.json();
       setSites(data);
-    } catch (err: unknown) {
+    } catch (err) {
       console.error("Ошибка при загрузке сайтов:", err);
-      setError(err.message || "Не удалось загрузить список сайтов");
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Произошла неизвестная ошибка");
+      }
     } finally {
       setLoading(false);
     }
@@ -97,9 +101,13 @@ export default function SitesPage() {
         )
       );
       alert(`Статус сайта ${siteId} изменен на ${newStatus}`); // Временное уведомление
-    } catch (err: unknown) {
+    } catch (err) {
       console.error("Ошибка при изменении статуса:", err);
-      alert(err.message || "Не удалось изменить статус сайта"); // Временное уведомление
+      if (err instanceof Error) {
+        alert(err.message);
+      } else {
+        alert("Произошла неизвестная ошибка");
+      }
     }
   };
 

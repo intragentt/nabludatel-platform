@@ -5,18 +5,14 @@
     "moduleResolution": "Node",
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "outDir": "dist",
     "strict": true,
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@nabludatel/*": ["packages/*"],
-      "@nabludatel/ui": ["packages/ui/src"],
-      "@nabludatel/ui/*": ["packages/ui/src/*"],
-      "@nabludatel/core": ["packages/core/src"],
-      "@nabludatel/core/*": ["packages/core/src/*"]
+      "@nabudatel/core": ["packages/core/src"],
+      "@nabudatel/core/*": ["packages/core/src/*"],
+      "@nabudatel/ui": ["packages/ui/src"],
+      "@nabudatel/ui/*": ["packages/ui/src/*"]
     }
-  },
-  "include": ["backend/**/*"],
-  "exclude": ["node_modules"]
+  }
 }
