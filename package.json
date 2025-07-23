@@ -5,5 +5,11 @@
   "scripts": {
     "dev": "turbo dev",
     "build": "turbo build"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2"
+  },
+  "devDependencies": {
+    "turbo": "^2.5.5"
   }
 }
