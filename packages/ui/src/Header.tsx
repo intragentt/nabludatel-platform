@@ -1,4 +1,5 @@
 // packages/ui/src/Header.tsx
+// Фиксированная шапка сайта с логотипом.
 
 import React from "react";
 import Logo from "./icons/Logo";

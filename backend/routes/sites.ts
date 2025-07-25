@@ -61,7 +61,7 @@ adminSitesRouter.put("/:id/status", ensureSuperAdmin, (req, res) => {
     writeFileSync(sitesFilePath, JSON.stringify(sites, null, 2), "utf-8");
     console.log(
       `[${new Date().toISOString()}] Site ${siteId} status updated to ${status} by user ${
-        req.user?.id
+        (req as any).user?.id
       }`
     );
     res.json(sites[siteIndex]);

@@ -1,4 +1,6 @@
 // /backend/routes/users.ts
+// CRUD-операции над пользователями. Все данные хранятся
+// в JSON-файле backend/db/users.json.
 import { Router } from "express";
 import {
   readFileSync,
@@ -16,7 +18,8 @@ const filePath = resolve(__dirname, "../db/users.json");
 
 console.log("[users.ts] Путь к users.json:", filePath);
 
-// Получить всех пользователей (доступно всем авторизованным)
+// GET /api/users
+// Возвращает массив всех пользователей.
 router.get("/", (_req, res) => {
   try {
     const data = readFileSync(filePath, "utf-8");
@@ -26,7 +29,8 @@ router.get("/", (_req, res) => {
   }
 });
 
-// Добавить пользователя (admin/editor)
+// POST /api/users
+// Создание нового пользователя. Доступно только роли "admin".
 router.post("/", requireRole("admin"), async (req, res) => {
   try {
     const newUser = req.body;
@@ -83,7 +87,8 @@ router.post("/", requireRole("admin"), async (req, res) => {
   }
 });
 
-// Удалить пользователя (admin)
+// DELETE /api/users/:id
+// Удаление пользователя по ID. Доступно только роли "admin".
 router.delete("/:id", requireRole("admin"), (req, res) => {
   const id = Number(req.params.id);
   if (!id) return res.status(400).json({ error: "Invalid ID" });
@@ -103,7 +108,9 @@ router.delete("/:id", requireRole("admin"), (req, res) => {
   }
 });
 
-// Обновить пользователя (admin может менять роль и блокировать, editor только свои данные, viewer запрещено)
+// PUT /api/users/:id
+// Обновление данных пользователя. Администратор может менять любые поля,
+// валидация пароля и роли выполняется ниже.
 router.put("/:id", requireRole("admin"), async (req, res) => {
   const id = Number(req.params.id);
   if (!id) return res.status(400).json({ error: "Invalid ID" });

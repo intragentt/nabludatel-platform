@@ -1,4 +1,6 @@
 // /backend/index.ts
+// Главный файл запуска Express-сервера.
+// Здесь подключаются все маршруты и middleware.
 import express from "express";
 import cors from "cors";
 import path from "path";
@@ -31,16 +33,18 @@ app.use(express.json());
 // Раздача статики для загруженных файлов
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-// ПУБЛИЧНЫЕ МАРШРУТЫ (не требуют JWT)
+// Публичные маршруты, доступные без авторизации.
+// Здесь клиент получает страницы и информацию о сайтах.
 app.use("/api/auth", authRouter);
 app.use("/api/sites", publicSitesRouter); // <-- Для публичной инфы о сайте
 app.use("/api/sites", pagesRouter); // <-- Для публичных страниц
 app.use("/api/sites", productsRouter); // <-- Для публичных продуктов
 
-// ЗАЩИЩЕННЫЕ МАРШРУТЫ (требуют JWT)
+// Защищённые маршруты админки. Все они требуют валидный JWT.
 app.use("/api/users", requireAuth, usersRouter);
 app.use("/api/upload", requireAuth, uploadRouter);
-app.use("/api/admin/sites", requireAuth, adminSitesRouter); // <-- Для админки, с префиксом /admin
+// Отдельный префикс /api/admin для управления сайтами через админку.
+app.use("/api/admin/sites", requireAuth, adminSitesRouter);
 
 // Обработка 404 - неизвестных маршрутов
 app.use((req, res) => {
@@ -60,6 +64,7 @@ app.listen(PORT, () => {
   console.log("=".repeat(60) + "\n");
 });
 
+// Красиво завершаем работу по сигналам ОС
 process.on("SIGINT", () => {
   printServerStop("backend", pkg.lastUpdated, pkg.version);
   process.exit(0);
