@@ -19,7 +19,7 @@ export default function Header() {
               - w-[100px]: ширина SVG
               - text-brand-primary: цвет логотипа
             */}
-            <Logo className="text-brand-primary h-[30px] w-auto" />
+            <Logo className="h-[30px] w-auto" style={{ color: "var(--color-brand-primary)" }} />
           </a>
         </div>
       </header>

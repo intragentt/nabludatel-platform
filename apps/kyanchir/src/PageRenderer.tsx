@@ -1,4 +1,4 @@
-// apps/site-runner/src/PageRenderer.tsx
+// kyanchir site PageRenderer
 
 import React from "react";
 // Импортируем компоненты Header и CatalogContent из пакета UI
