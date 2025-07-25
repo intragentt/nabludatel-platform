@@ -2,6 +2,8 @@
 import express from "express";
 import cors from "cors";
 import path from "path";
+import { printServerStop } from "@scripts/printServerStop";
+import pkg from "./package.json";
 import usersRouter from "./routes/users";
 import uploadRouter from "./routes/upload";
 import authRouter from "./routes/auth";
@@ -52,13 +54,17 @@ app.listen(PORT, () => {
   console.log(`🌐 Сервер запущен на: http://localhost:${PORT}`);
   console.log(`📂 API доступно по адресу: http://localhost:${PORT}/api`);
   console.log(`📸 Загрузка файлов: http://localhost:${PORT}/api/upload`);
+  console.log(`🕒 Последнее обновление:  ${pkg.lastUpdated}`);
+  console.log(`🧪 Версия билда:          v${pkg.version}`);
   console.log(`✉️ Telegram: @intragentt`);
   console.log("=".repeat(60) + "\n");
 });
 
 process.on("SIGINT", () => {
-  console.log("\n" + "=".repeat(60));
-  console.log("🛑 Сервер NABLUДATЕЛЬ остановлен вручную.");
-  console.log("=".repeat(60) + "\n");
+  printServerStop("backend", pkg.lastUpdated, pkg.version);
+  process.exit(0);
+});
+process.on("SIGTERM", () => {
+  printServerStop("backend", pkg.lastUpdated, pkg.version);
   process.exit(0);
 });

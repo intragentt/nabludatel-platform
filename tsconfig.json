@@ -12,7 +12,8 @@
       "@nabudatel/core": ["packages/core/src"],
       "@nabudatel/core/*": ["packages/core/src/*"],
       "@nabudatel/ui": ["packages/ui/src"],
-      "@nabudatel/ui/*": ["packages/ui/src/*"]
+      "@nabudatel/ui/*": ["packages/ui/src/*"],
+      "@scripts/*": ["scripts/*"]
     }
   }
 }
