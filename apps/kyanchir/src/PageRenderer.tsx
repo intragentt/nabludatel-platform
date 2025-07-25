@@ -2,15 +2,17 @@
 
 import React from "react";
 // Импортируем компоненты Header и CatalogContent из пакета UI
-import { Header, CatalogContent, SimpleSwiper } from "../../../packages/ui/src/index";
+import { Header, CatalogContent, SimpleSwiper, HeroSection, Footer } from "@nabudatel/ui";
 // Импортируем типы данных Product, Page, Site из пакета Core
-import type { Product, Page, Site } from "../../../packages/core/src/index";
+import type { Product, Page, Site } from "@nabudatel/core";
 
 // Словарь (map) для сопоставления имени компонента строкового типа с самим React-компонентом
 const componentsMap: { [key: string]: React.ComponentType<any> } = {
   Header: Header,
   CatalogContent: CatalogContent,
   SimpleSwiper: SimpleSwiper,
+  HeroSection: HeroSection,
+  Footer: Footer,
 };
 
 // Интерфейс пропсов для PageRenderer
