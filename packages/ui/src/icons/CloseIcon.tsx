@@ -1,3 +1,7 @@
+// /Users/intragentt/nabludatel.core/packages/ui/src/icons/CloseIcon.tsx
+
+import React from "react"; // <--- ДОБАВЛЕНО
+
 export default function CloseIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg

@@ -3,7 +3,6 @@ import React from "react";
 import { Header, CatalogContent } from "../../../packages/ui/src/index";
 import type { Product, Page, Site } from "../../../packages/core/src/index";
 
-// Карта компонентов
 const componentsMap: { [key: string]: React.ComponentType<any> } = {
   Header: Header,
   CatalogContent: CatalogContent,
@@ -29,20 +28,15 @@ export default function PageRenderer({
       </head>
       <body>
         <div id="root">
-          <h1>Сайт: {site.name}</h1>
-          <h2>Страница: {page.title}</h2>
-          <hr />
           {page.components.map((comp) => {
             const Component = componentsMap[comp.type];
             if (!Component) {
               return <div key={comp.id}>Компонент "{comp.type}" не найден</div>;
             }
-
             const componentProps =
               comp.type === "CatalogContent"
                 ? { ...comp.props, products }
                 : comp.props;
-
             return <Component key={comp.id} {...componentProps} />;
           })}
         </div>

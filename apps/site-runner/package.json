@@ -5,10 +5,10 @@
   "buildVersion": "v1.0.0",
   "private": true,
   "scripts": {
-    "dev:css": "../../node_modules/.bin/tailwindcss -i ./src/app/globals.css -o ./public/styles.css --watch",
+    "dev:css": "tailwindcss -i ./src/app/globals.css -o ./public/styles.css --watch",
     "dev:server": "tsx src/server.ts --watch",
     "dev": "concurrently \"pnpm:dev:css\" \"pnpm:dev:server\"",
-    "build:css": "../../node_modules/.bin/tailwindcss -i ./src/app/globals.css -o ./public/styles.css",
+    "build:css": "tailwindcss -i ./src/app/globals.css -o ./public/styles.css",
     "build": "pnpm run build:css && tsc --project tsconfig.json",
     "start": "node dist/server.js"
   },
@@ -20,7 +20,9 @@
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
+    "@tailwindcss/cli": "^4.1.11",
     "@types/express": "^4.17.21",
+    "@types/node": "^20.12.12",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "autoprefixer": "^10.4.21",

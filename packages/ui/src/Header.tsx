@@ -1,24 +1,33 @@
-// Местоположение: src/components/Header.tsx
+// packages/ui/src/Header.tsx
+
 import React from "react";
 import Logo from "./icons/Logo";
-import DesktopNav from "./header/DesktopNav";
 
 export default function Header() {
   return (
     <>
-      <header className="fixed top-0 right-0 left-0 z-152 w-full border-b border-gray-200 bg-white">
-        <div className="container mx-auto flex h-full items-center justify-between px-4 py-4 sm:px-6 lg:px-8 xl:px-12">
-          <a href="/" aria-label="На главную" className="-mt-1">
-            <Logo className="logo-brand-color h-[10px] w-auto" />
+      <header className="fixed top-0 left-0 right-0 z-50 w-full border-b border-gray-200 bg-white">
+        {/* 
+          "РАБОЧАЯ ОБЛАСТЬ" (Точно по ТЗ):
+          - h-[65px]: Строгая высота.
+          - px-[15px]: Отступы по бокам 15px.
+          - flex items-center: Выравнивает все внутри по вертикали.
+        */}
+        <div className="mx-auto flex h-[65px] items-center px-[15px]">
+          <a href="/">
+            {/* 
+              ЛОГОТИП (Точно по ТЗ):
+              - h-[30px]: Высота логотипа 30px.
+              - w-auto: Ширина подстраивается автоматически.
+              - text-brand-primary: Фирменный сиреневый цвет.
+            */}
+            <Logo className="h-[30px] w-auto text-brand-primary" />
           </a>
-
-          <div className="hidden items-center space-x-6 lg:flex">
-            <DesktopNav />
-          </div>
         </div>
       </header>
 
-      <div className="h-[65px]" aria-hidden="true" />
+      {/* Распорка той же высоты */}
+      <div className="h-[65px]" />
     </>
   );
 }

@@ -1,23 +1,39 @@
 import type { Config } from "tailwindcss";
+import path from "path";
+
+// ====================================================================
+// НАЧАЛО "АТОМНОГО ЛОКАТОРА"
+// ====================================================================
+
+// Шаг 1: Мы просим Node.js найти главный файл пакета '@nabudatel/ui'.
+// require.resolve вернет АБСОЛЮТНЫЙ путь к этому файлу, например:
+// '/Users/intragentt/nabludatel.core/packages/ui/dist/index.js'
+const uiPackageEntryPoint = require.resolve("@nabudatel/ui");
+
+// Шаг 2: Мы берем путь к этому файлу и "отрезаем" имя файла,
+// чтобы получить путь к папке, в которой он лежит (т.е. '/.../ui/dist')
+const uiPackageDir = path.dirname(uiPackageEntryPoint);
+
+// Шаг 3: Теперь, зная где находится папка dist, мы строим
+// надежный путь к папке с исходниками 'src'
+const uiPackageSrcPath = path.join(uiPackageDir, "../src/**/*.{js,ts,jsx,tsx}");
+
+// ====================================================================
+// КОНЕЦ "АТОМНОГО ЛОКАТОРА"
+// ====================================================================
 
 const config: Config = {
-  // Указываем Tailwind, где искать классы для оптимизации CSS
-  content: [
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "../../packages/ui/src/**/*.{js,ts,jsx,tsx}", // ВАЖНО: Добавили путь к нашей библиотеке компонентов
-  ],
+  // Теперь мы даем Tailwind 100% точный и работающий путь
+  content: ["./src/**/*.{js,ts,jsx,tsx}", uiPackageSrcPath],
   theme: {
-    // Стандартные и понятные брейкпоинты. Mobile-first подход.
     screens: {
-      sm: "640px", // Планшеты в портретной ориентации
-      md: "768px", // Планшеты в ландшафтной ориентации
-      lg: "1024px", // Ноутбуки
-      xl: "1280px", // Большие десктопы
-      "2xl": "1536px", // Очень большие десктопы
+      sm: "640px",
+      md: "768px",
+      lg: "1024px",
+      xl: "1280px",
+      "2xl": "1536px",
     },
     extend: {
-      // Здесь мы ссылаемся на наши CSS-переменные из globals.css
       colors: {
         brand: {
           primary: "var(--color-brand-primary)",
@@ -37,7 +53,6 @@ const config: Config = {
         feedback: {
           error: "var(--color-feedback-error)",
         },
-        // Добавим и для фона, чтобы было консистентно
         background: {
           primary: "var(--color-background-primary)",
         },
@@ -46,16 +61,13 @@ const config: Config = {
         },
       },
       fontFamily: {
-        // Ссылаемся на переменные, которые будут определены в layout.tsx при подключении шрифтов
         body: ["var(--font-manrope)", "sans-serif"],
         heading: ["var(--font-unbounded)", "sans-serif"],
         mono: ["var(--font-pt-mono)", "monospace"],
       },
     },
   },
-  plugins: [
-    require("@tailwindcss/line-clamp"), // Этот плагин может быть полезен
-  ],
+  plugins: [require("@tailwindcss/line-clamp")],
 };
 
 export default config;
