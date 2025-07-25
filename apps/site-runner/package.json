@@ -5,13 +5,16 @@
   "buildVersion": "v1.0.0",
   "private": true,
   "scripts": {
-    "build": "tsc --project tsconfig.json",
-    "start": "node dist/apps/site-runner/src/server.js",
-    "dev": "npm run build && npm run start"
+    "dev:css": "../../node_modules/.bin/tailwindcss -i ./src/app/globals.css -o ./public/styles.css --watch",
+    "dev:server": "tsx src/server.ts --watch",
+    "dev": "concurrently \"pnpm:dev:css\" \"pnpm:dev:server\"",
+    "build:css": "../../node_modules/.bin/tailwindcss -i ./src/app/globals.css -o ./public/styles.css",
+    "build": "pnpm run build:css && tsc --project tsconfig.json",
+    "start": "node dist/server.js"
   },
   "dependencies": {
-    "@nabudatel/core": "workspace:*", 
-    "@nabudatel/ui": "workspace:*",   
+    "@nabudatel/core": "workspace:*",
+    "@nabudatel/ui": "workspace:*",
     "express": "^4.19.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
@@ -20,7 +23,11 @@
     "@types/express": "^4.17.21",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "ts-node": "^10.9.2",
+    "autoprefixer": "^10.4.21",
+    "concurrently": "^8.2.2",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.11",
+    "tsx": "^4.20.3",
     "typescript": "^5.4.5"
   }
 }

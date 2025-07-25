@@ -1,4 +1,5 @@
 // Местоположение: src/components/Header.tsx
+import React from "react";
 import Logo from "./icons/Logo";
 import DesktopNav from "./header/DesktopNav";
 

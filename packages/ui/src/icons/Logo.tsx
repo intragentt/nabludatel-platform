@@ -2,6 +2,7 @@
 
 // Это простой и чистый React-компонент для твоего логотипа.
 // Здесь нет ничего лишнего, только сам SVG.
+import React from "react";
 export default function Logo(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg

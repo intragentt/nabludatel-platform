@@ -1,3 +1,5 @@
+// /Users/intragentt/nabludatel.core/admin/src/pages/SitesPage.tsx
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -30,7 +32,8 @@ export default function SitesPage() {
         return;
       }
 
-      const res = await fetch("http://localhost:3001/api/sites", {
+      // ИЗМЕНЕНИЕ №1: Добавлен префикс /admin
+      const res = await fetch("http://localhost:3001/api/admin/sites", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -72,8 +75,9 @@ export default function SitesPage() {
         return;
       }
 
+      // ИЗМЕНЕНИЕ №2: Добавлен префикс /admin
       const res = await fetch(
-        `http://localhost:3001/api/sites/${siteId}/status`,
+        `http://localhost:3001/api/admin/sites/${siteId}/status`,
         {
           method: "PUT",
           headers: {
@@ -100,7 +104,7 @@ export default function SitesPage() {
           site.id === siteId ? { ...site, status: newStatus } : site
         )
       );
-      alert(`Статус сайта ${siteId} изменен на ${newStatus}`); // Временное уведомление
+      // alert(`Статус сайта ${siteId} изменен на ${newStatus}`); // Временное уведомление, можно убрать
     } catch (err) {
       console.error("Ошибка при изменении статуса:", err);
       if (err instanceof Error) {

@@ -1,17 +1,18 @@
-// apps/site-runner/src/server.ts
-// import "tsconfig-paths/register";
+// /Users/intragentt/nabludatel.core/apps/site-runner/src/server.ts
+
 const path = require("path");
 const fs = require("fs");
-import { printServerStop } from "@scripts/printServerStop";
+const { printServerStop } = require("../../../scripts/printServerStop.js");
 
 const pkgPath = path.resolve(__dirname, "../package.json");
 const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf-8"));
 import express from "express";
 import React from "react";
 import ReactDOMServer from "react-dom/server";
-import PageRenderer from "./PageRenderer";
+import PageRenderer from "./PageRenderer.js";
 
 const app = express();
+app.use(express.static("public"));
 const PORT = 4000;
 
 app.get("/:siteDomain", async (req, res) => {
@@ -39,6 +40,15 @@ app.get("/:siteDomain", async (req, res) => {
     }
 
     const site = await siteRes.json();
+
+    // --- ИЗМЕНЕНИЕ: Добавлена проверка статуса сайта ---
+    if (site.status !== "active") {
+      return res
+        .status(403)
+        .send("<h1>Сайт временно отключен администратором.</h1>");
+    }
+    // --------------------------------------------------
+
     const page = await pageRes.json();
     const products = await productsRes.json();
 

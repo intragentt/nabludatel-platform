@@ -1,4 +1,12 @@
-// backend/tsconfig.json
 {
-    "extends": "../tsconfig.json"
-  }
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "module": "commonjs", // Важно для Express.js
+    "outDir": "dist",
+    "baseUrl": ".", // Говорим, что точка отсчета - текущая папка
+    "paths": {
+      "@scripts/*": ["../scripts/*"] // Наша "карта псевдонимов"
+    }
+  },
+  "include": ["**/*"] // Включаем все файлы в папке backend
+}

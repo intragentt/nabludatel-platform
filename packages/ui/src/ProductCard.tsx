@@ -1,4 +1,5 @@
 // Местоположение: src/components/ProductCard.tsx
+import React from "react";
 import { formatPrice, PriceParts } from "./utils/formatPrice";
 import ImagePlaceholder from "./ImagePlaceholder";
 import HeartIcon from "./icons/HeartIcon";

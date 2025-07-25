@@ -24,9 +24,8 @@ export default function PageRenderer({
     <html>
       <head>
         <meta charSet="utf-8" />
-        <title>
-          {site.name} - {page.title}
-        </title>
+        <title>{`${site.name} - ${page.title}`}</title>
+        <link rel="stylesheet" href="/styles.css" />
       </head>
       <body>
         <div id="root">

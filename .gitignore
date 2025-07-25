@@ -1,8 +1,32 @@
+# Зависимости и кэш
 node_modules/
 dist/
 .turbo/
-.env
+.pnpm-store
+.eslintcache
+
+# Логи
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+server.log
+
+# Файлы операционной системы
 .DS_Store
+Thumbs.db
+
+# Файлы IDE и плагинов
+.vscode
+.idea
+.continue/
+
+# Файлы окружения (СЕКРЕТЫ!)
+.env
+.env.*
+
+# Специфичные для проекта исключения (КРИТИЧЕСКИ ВАЖНО!)
 backend/db/*.json
 backend/uploads/
-server.log

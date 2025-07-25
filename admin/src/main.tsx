@@ -16,12 +16,7 @@ console.log(
 console.log("📬 По вопросам и доступу: https://t.me/intragentt");
 console.log("=".repeat(60) + "\n");
 
-process.on("SIGINT", () => {
-  console.log("\n" + "=".repeat(60));
-  console.log("🛑 Панель NABLUДATEL ADMIN остановлена вручную.");
-  console.log("=".repeat(60) + "\n");
-  process.exit(0);
-});
+// ❌ Удалена часть с process.on - она не работает в браузере
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

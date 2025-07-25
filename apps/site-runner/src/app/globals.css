@@ -1,0 +1,79 @@
+/* Используем новый, правильный синтаксис для Tailwind v3+ */
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/* 
+  @layer base - это наш "фундамент". 
+  Здесь мы определяем самые главные, глобальные правила для всего сайта.
+*/
+@layer base {
+  /* 
+    :root - это наш "Склад Красок". 
+    Единственное место, где мы определяем цвета.
+  */
+  :root {
+    /* Полка 1: Фирменные Цвета */
+    --color-brand-primary: #6B80C5;
+    --color-brand-secondary: #C1D0FF;
+    --color-brand-tertiary: #DEE5FF;
+    
+    /* Полка 2: Цвета для Текста и Структуры */
+    --color-text-primary: #272727;
+    --color-text-secondary: #868686; /* Взят из Figma */
+    --color-text-disabled: #DFDFDF;
+    --color-border-subtle: #DFDFDF; /* Используем тот же цвет для разделителей */
+    --color-background-primary: #FFFFFF;
+
+    /* Полка 3: Акцентные Цвета */
+    --color-accent-primary: #FF91D2;
+    --color-accent-secondary: #FBC0E3;
+    --color-accent-tertiary: #FFE1F3;
+
+    /* Полка 4: Сигнальные Цвета */
+    --color-feedback-error: #E06F6F;
+
+    /* ВАЖНО: Добавляем переменные для шрифтов */
+    --font-manrope: 'Manrope', sans-serif;
+    --font-unbounded: 'Unbounded', sans-serif;
+    --font-pt-mono: 'PT Mono', monospace;
+  }
+
+  /*
+    Применяем базовые стили к телу документа.
+  */
+  body {
+    background-color: var(--color-background-primary);
+    color: var(--color-text-primary);
+    font-family: var(--font-manrope); /* Используем наш "надежный шуруповерт" Manrope по умолчанию */
+  }
+
+  /* 
+    ГЛОБАЛЬНЫЕ ПРАВИЛА ДЛЯ ТИПОГРАФИКИ
+  */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-unbounded); /* Используем наш "тяжелый молоток" Unbounded для всех заголовков */
+    text-wrap: balance;
+  }
+
+  h1 {
+    font-size: clamp(2.5rem, 6vw + 1rem, 4.5rem);
+    font-weight: 800;
+  }
+
+  h2 {
+    font-size: clamp(2rem, 4vw + 0.5rem, 3rem);
+    font-weight: 700;
+  }
+
+  h3 {
+    font-size: clamp(1.5rem, 3vw + 0.5rem, 2.25rem);
+    font-weight: 600;
+  }
+  
+  p {
+    font-size: clamp(1rem, 0.8vw + 0.5rem, 1.125rem);
+    line-height: 1.6;
+    text-wrap: pretty;
+  }
+}

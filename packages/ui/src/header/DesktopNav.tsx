@@ -1,3 +1,4 @@
+import React from "react";
 import SearchIcon from "../icons/SearchIcon";
 import CartIcon from "../icons/CartIcon";
 import { NAV_LINKS } from "../config/navigation";
