@@ -582,7 +582,7 @@ myCMS/
 │   ├── backend/          # Node.js + Express API для управления данными (пользователи, сайты, контент)
 │   ├── admin/            # Админ-панель платформы (React + Tailwind)
 │   ├── client-admin/     # Админ-панель клиента (React + Tailwind)
-│   └── site-runner/      # (опционально) Next.js или сборка статических сайтов
+│   └── kyanchir/      # (опционально) Next.js или сборка статических сайтов
 ├── packages/
 │   ├── core/             # Общие TypeScript-модели, бизнес-логика, утилиты
 │   ├── ui/               # Переиспользуемые UI-компоненты
@@ -639,7 +639,7 @@ myCMS/
 │   ├── **backend/**        # Node.js (Express) API server – handles data for sites, users, content
 │   ├── **admin/**          # React + Tailwind app – platform owner admin panel (super-admin interface)
 │   ├── **client-admin/**   # React + Tailwind app – client admin panel (each client manages only their site)
-│   └── **site-runner/**    # (Optional) Next.js app or static site generator for client sites (SSR or static export)
+│   └── **kyanchir/**    # (Optional) Next.js app or static site generator for client sites (SSR or static export)
 ├── packages/
 │   ├── **core/**           # Core TypeScript library – business logic, shared types/interfaces, utilities, validators
 │   ├── **ui/**             # (Optional) Shared UI components library (buttons, form fields, etc. for reuse in admin apps)
@@ -658,7 +658,7 @@ myCMS/
 • **backend/** – Node.js + Express API для headless CMS: управление пользователями, сайтами и контентом. Маршруты разделены на `admin/` (для супер-админа) и `site/` (для клиентов). Хранилище данных — JSON с возможностью перехода на MongoDB или SQL.
 • **admin/** – админ-панель платформы (React + Tailwind) для супер-админа: создание и управление сайтами, аккаунтами, правами и настройками.
 • **client-admin/** – панель управления сайтом для клиентов (React + Tailwind): редактирование страниц, загрузка медиа и настройка параметров своего сайта.
-• **site-runner/** – (опционально) приложение на Next.js или статический генератор для рендеринга и деплоя клиентских сайтов (SSR/ISR или статическая сборка).
+• **kyanchir/** – (опционально) приложение на Next.js или статический генератор для рендеринга и деплоя клиентских сайтов (SSR/ISR или статическая сборка).
 • **sites/** – директория с готовыми сайтами клиентов (HTML, JS, CSS, медиа) для отдельного деплоя или обслуживания через CDN.
 
 ### 🔗 Общий код
@@ -874,7 +874,7 @@ SEO and Meta: Since clients will use these sites for marketing, SEO is important
 
 Example scenario using the architecture:
 	•	A client logs into their client-admin and adds a new page “About Us”, drags some components (Hero and TextBlock) and enters text. When they hit save/publish, the client-admin calls the backend API to save this page structure in the DB for site ABC.
-	•	The client then hits “Publish Site”. The backend (or site-runner service) takes site ABC’s data and either:
+	•	The client then hits “Publish Site”. The backend (or kyanchir service) takes site ABC’s data and either:
 	•	Static case: generates sites/ABC/about-us.html (and updates any navigation menus, etc.) and marks the site as published. Now, when someone visits abc.yourplatform.com/about-us, the server serves that static file.
 	•	SSR case: or, if using SSR, it simply means the new content is already in the DB; the Next.js app will now render the updated “About Us” on the fly when requested, since it pulls from DB (or you may have a cache flush mechanism).
 	•	Either way, the new page is live. The client’s custom domain (say www.clientsite.com) is CNAME’d to abc.yourplatform.com, so the content shows up on their domain seamlessly.

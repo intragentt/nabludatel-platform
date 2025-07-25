@@ -14,7 +14,7 @@ function run(label: string, path: string) {
 }
 
 run("backend", "backend");
-run("kyanchir", "apps/site-runner");
+run("kyanchir", "apps/kyanchir");
 
 process.on("SIGINT", () => {
   console.log("\n🛑 Платформа NABLUДATEL остановлена вручную.");

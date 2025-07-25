@@ -13,7 +13,7 @@
   "references": [
     { "path": "admin" }, 
     { "path": "backend" },
-    { "path": "apps/site-runner" },
+    { "path": "apps/kyanchir" },
     { "path": "packages/core" },
     { "path": "packages/ui" }
   ]

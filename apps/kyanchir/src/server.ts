@@ -1,4 +1,4 @@
-// /Users/intragentt/nabludatel.core/apps/site-runner/src/server.ts
+// server for kyanchir site rendering
 
 const path = require("path");
 const fs = require("fs");
