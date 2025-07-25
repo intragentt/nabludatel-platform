@@ -1,6 +1,6 @@
-// /admin/src/pages/LoginPage.tsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import AuthLayout from "../components/AuthLayout";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -36,11 +36,10 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+    <AuthLayout>
       <form
         onSubmit={handleLogin}
-        className="w-full max-w-md bg-white rounded-xl shadow-lg border border-gray-200 p-10 flex flex-col gap-8 font-sans"
-        style={{ minWidth: 320 }}
+        className="w-[90%] max-w-md sm:max-w-lg mx-auto bg-white rounded-xl shadow-lg border border-gray-200 p-10 flex flex-col gap-8 font-sans"
       >
         <h2 className="text-3xl font-semibold text-center text-gray-900 mb-4">
           Вход
@@ -97,6 +96,6 @@ export default function LoginPage() {
           Войти
         </button>
       </form>
-    </div>
+    </AuthLayout>
   );
 }

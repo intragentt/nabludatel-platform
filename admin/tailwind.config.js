@@ -1,20 +1,29 @@
 /** @type {import('tailwindcss').Config} */
-import path from "path";
-
-const uiPackageEntryPoint = require.resolve("@nabudatel/ui");
-const uiPackageDir = path.dirname(uiPackageEntryPoint);
-const uiPackageSrcPath = path.join(uiPackageDir, "../src/**/*.{js,ts,jsx,tsx}");
-
 export default {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}", uiPackageSrcPath],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      // Расширяем палитру цветов, чтобы можно было использовать классы типа bg-brand-primary
+      colors: {
+        brand: {
+          primary: "var(--brand-primary)",
+          secondary: "var(--brand-secondary)",
+          tertiary: "var(--brand-tertiary)",
+        },
+        text: {
+          primary: "var(--text-primary)",
+          secondary: "var(--text-secondary)",
+        },
+        feedback: {
+          error: "var(--error)",
+        },
+        // ... можно добавить другие группы по аналогии
+      },
+      // Расширяем семейства шрифтов, чтобы можно было использовать классы типа font-heading
       fontFamily: {
-        sans: ["var(--font-body)", "sans-serif"],
-        serif: ["var(--font-serif)", "serif"],
-        mono: ["var(--font-mono)", "monospace"],
-        heading: ["var(--font-heading)", "sans-serif"],
-        body: ["var(--font-body)", "sans-serif"],
+        sans: ["var(--font-manrope)", "sans-serif"],
+        heading: ["var(--font-unbounded)", "sans-serif"],
+        mono: ["var(--font-pt-mono)", "monospace"],
       },
     },
   },

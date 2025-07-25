@@ -1,48 +1,47 @@
-# AGENTS Instructions for `nabludatel-platform`
+# Инструкции AGENTS для `nabludatel-platform`
 
-This repository is a monorepo containing several Node.js/TypeScript packages and apps.
-The layout is:
+Этот репозиторий — монорепозиторий, содержащий несколько пакетов и приложений на Node.js/TypeScript.
+Структура проекта:
 
-- `admin/` – React admin panel built with Vite.
-- `backend/` – Express API server storing data in JSON files.
-- `apps/site-runner/` – small server to render static sites using the UI package.
+- `admin/` – React-панель администратора, собранная с помощью Vite.
+- `backend/` – сервер API на Express, хранящий данные в JSON-файлах.
+- `apps/site-runner/` – небольшой сервер для рендеринга статических сайтов с использованием UI-пакета.
 - `packages/`
-  - `core/` – shared TypeScript interfaces and utilities.
-  - `ui/` – React UI component library.
-- `core/` – additional utilities (project info, slugify helper).
-- `scripts/` – helper scripts for development banners and logs.
+  - `core/` – общие интерфейсы TypeScript и утилиты.
+  - `ui/` – библиотека компонентов UI на React.
+- `core/` – дополнительные утилиты (информация о проекте, помощник для slug'ов).
+- `scripts/` – вспомогательные скрипты для разработки (баннеры, логи).
 
-## How it works
+## Как это работает
 
 1. **Backend** (`backend/`)
-   - Runs an Express server on port 3001.
-   - Stores users and site data in `backend/db/*.json` files.
-   - Provides REST API routes under `/api/*` for users, auth, uploads and sites.
-   - Uses simple JWT auth middleware located in `backend/middlewares/`.
-   - Uploaded files are saved under `backend/uploads/` and served statically.
+   - Запускает Express-сервер на порту 3001.
+   - Хранит данные пользователей и сайтов в файлах `backend/db/*.json`.
+   - Предоставляет REST API по маршрутам `/api/*` для пользователей, авторизации, загрузок и сайтов.
+   - Использует простую JWT-аутентификацию (middleware в `backend/middlewares/`).
+   - Загруженные файлы сохраняются в `backend/uploads/` и раздаются как статика.
 
 2. **Admin** (`admin/`)
-   - Vite + React SPA for managing users/sites.
-   - Communicates with the backend via fetch calls.
-   - Uses Tailwind for styling. Entry point: `admin/src/main.tsx`.
+   - SPA на Vite + React для управления пользователями/сайтами.
+   - Обменивается данными с backend через `fetch`-запросы.
+   - Использует Tailwind для стилей. Точка входа: `admin/src/main.tsx`.
 
-3. **UI Package** (`packages/ui`)
-   - Contains reusable React components (header, product card, etc.).
-   - Consumed by other apps like `site-runner`.
+3. **UI-пакет** (`packages/ui`)
+   - Содержит переиспользуемые React-компоненты (шапка, карточка товара и т.д.).
+   - Используется другими приложениями, такими как `site-runner`.
 
 4. **Site Runner** (`apps/site-runner`)
-   - Minimal Express/React server for rendering a storefront using components
-     from the UI and data from packages/core.
+   - Минималистичный сервер на Express/React для отображения витрины, используя компоненты
+     из UI и данные из `packages/core`.
 
-5. **Core Utilities** (`core/` and `packages/core`)
-   - Provide small helpers like `slugify` and `project.ts` with git metadata.
+5. **Core-утилиты** (`core/` и `packages/core`)
+   - Предоставляют небольшие помощники, такие как `slugify` и `project.ts` с git-метаданными.
 
-## Development
+## Разработка
 
-- Install dependencies with `pnpm install`.
-- Run `pnpm dev` to launch all apps via Turborepo (admin + backend).
-- Backend scripts live under `scripts/`. `printServerStop.ts` logs shutdown info.
+- Установите зависимости с помощью `pnpm install`.
+- Запустите `pnpm dev`, чтобы поднять все приложения через Turborepo (admin + backend).
+- Скрипты backend находятся в `scripts/`. Скрипт `printServerStop.ts` выводит информацию при завершении работы сервера.
 
-There are currently no automated tests. When modifying code, please ensure
-`npx tsc -p backend/tsconfig.json --noEmit` runs without new errors.
-
+В настоящее время автоматические тесты отсутствуют. При внесении изменений убедитесь, что команда  
+`npx tsc -p backend/tsconfig.json --noEmit` не вызывает новых ошибок.

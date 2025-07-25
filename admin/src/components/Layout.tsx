@@ -56,47 +56,53 @@ const Layout = () => {
 
   return (
     <div className="min-h-screen flex flex-col font-sans w-full">
-      <header className="bg-gray-800 text-white p-4 flex items-center justify-between">
-        <h1
-          className="text-xl font-bold cursor-pointer"
-          onClick={() => navigate("/")}
-        >
-          Admin Panel
-        </h1>
-
-        <nav className="space-x-4">
-          {links.map(({ to, label }) => (
-            <button
-              key={to}
-              onClick={() => navigate(to)}
-              className={`px-3 py-1 rounded ${
-                location.pathname === to ? "bg-gray-700" : "hover:bg-gray-700"
-              }`}
-            >
-              {label}
-            </button>
-          ))}
-        </nav>
-
-        <button
-          onClick={() => {
-            localStorage.removeItem("token"); // Удаляем токен при выходе
-            localStorage.removeItem("role"); // Очищаем старую роль (если была)
-            navigate("/login");
-          }}
-          className="bg-red-600 px-3 py-1 rounded hover:bg-red-700"
-        >
-          Выйти
-        </button>
-      </header>
-
-      <main className="flex-grow bg-gray-100 p-6">
+      {location.pathname === "/login" ? (
         <Outlet />
-      </main>
+      ) : (
+        <>
+          <header className="bg-gray-800 text-white p-4 flex items-center justify-between">
+            <h1
+              className="text-xl font-bold cursor-pointer"
+              onClick={() => navigate("/")}
+            >
+              Admin Panel
+            </h1>
 
-      <footer className="bg-gray-800 text-white p-4 text-center">
-        © 2025 nabludatel.core
-      </footer>
+            <nav className="space-x-4">
+              {links.map(({ to, label }) => (
+                <button
+                  key={to}
+                  onClick={() => navigate(to)}
+                  className={`px-3 py-1 rounded ${
+                    location.pathname === to ? "bg-gray-700" : "hover:bg-gray-700"
+                  }`}
+                >
+                  {label}
+                </button>
+              ))}
+            </nav>
+
+            <button
+              onClick={() => {
+                localStorage.removeItem("token"); // Удаляем токен при выходе
+                localStorage.removeItem("role"); // Очищаем старую роль (если была)
+                navigate("/login");
+              }}
+              className="bg-red-600 px-3 py-1 rounded hover:bg-red-700"
+            >
+              Выйти
+            </button>
+          </header>
+
+          <main className="flex-grow bg-gray-100 p-6">
+            <Outlet />
+          </main>
+
+          <footer className="bg-gray-800 text-white p-4 text-center">
+            © 2025 nabludatel.core
+          </footer>
+        </>
+      )}
     </div>
   );
 };

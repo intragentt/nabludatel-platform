@@ -1,34 +1,30 @@
-// packages/ui/src/Header.tsx
-// Фиксированная шапка сайта с логотипом.
-
 import React from "react";
 import Logo from "./icons/Logo";
 
 export default function Header() {
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 w-full border-b border-gray-200 bg-white">
+      <header className="fixed top-0 left-0 right-0 z-50 w-full h-[72px] border-b border-gray-200 bg-gray-100 shadow-md">
         {/* 
-          "РАБОЧАЯ ОБЛАСТЬ" (Точно по ТЗ):
-          - h-[72px]: Строгая высота для мобильного вида.
-          - pl-[10px]: Отступ слева 10px.
-          - flex items-center: Выравнивает все внутри по вертикали.
+          "РАБОЧАЯ ОБЛАСТЬ":
+          - h-[72px]: высота шапки
+          - pl-[10px]: отступ слева
+          - flex items-center: вертикальное выравнивание
         */}
-        <div className="flex h-[72px] items-center pl-[10px]">
+        <div className="flex items-center pl-[10px]">
           <a href="/">
             {/* 
-              ЛОГОТИП (Точно по ТЗ):
-              - h-[30px]: Высота логотипа 30px.
-              - w-[100px]: Фиксированная ширина около 100px.
-              - text-brand-primary: Фирменный сиреневый цвет.
+              ЛОГОТИП:
+              - h-[30px]: высота SVG
+              - w-[100px]: ширина SVG
+              - text-brand-primary: цвет логотипа
             */}
-            <Logo className="h-[30px] w-[100px] text-brand-primary" />
+            <Logo className="text-brand-primary h-[30px] w-auto" />
           </a>
         </div>
       </header>
-
-      {/* Распорка той же высоты */}
-      <div className="h-[72px]" />
+      {/* Отступ для контента, чтобы учесть высоту шапки */}
+      <div className="h-[72px] bg-gray-100" />
     </>
   );
 }

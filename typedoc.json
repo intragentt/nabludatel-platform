@@ -1,0 +1,10 @@
+{
+    "entryPoints": [
+      "packages/core/src/index.ts",
+      "packages/ui/src/index.ts"
+    ],
+    "out": "docs/api",
+    "tsconfig": "tsconfig.json",
+    "disableSources": true,
+    "includeVersion": true
+  }

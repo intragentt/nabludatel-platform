@@ -1,25 +1,5 @@
 /*! tailwindcss v4.1.11 | MIT License | https://tailwindcss.com */
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=PT+Mono&family=Unbounded:wght@100..900&display=swap');
 @layer properties;
-@layer base {
-  :root {
-    --font-manrope: 'Manrope', sans-serif;
-    --font-unbounded: 'Unbounded', sans-serif;
-    --font-pt-mono: 'PT Mono', monospace;
-    --color-brand-primary: #6B80C5;
-    --color-brand-secondary: #5062A9;
-    --color-brand-tertiary: #E5E7EB;
-    --color-text-primary: #272727;
-    --color-text-secondary: #575757;
-    --color-text-disabled: #9CA3AF;
-    --color-accent-primary: #FF6B00;
-    --color-accent-secondary: #FFA400;
-    --color-accent-tertiary: #FFE4A3;
-    --color-feedback-error: #E53935;
-    --color-background-primary: #FFFFFF;
-    --color-border-subtle: #E5E5E5;
-  }
-}
 *, ::after, ::before, ::backdrop, ::file-selector-button {
   box-sizing: border-box;
   margin: 0;
@@ -163,19 +143,35 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
 [hidden]:where(:not([hidden='until-found'])) {
   display: none !important;
 }
-.border {
-  border-style: var(--tw-border-style);
-  border-width: 1px;
-}
 @layer base {
+  :root {
+    --font-manrope: "Manrope", sans-serif;
+    --font-unbounded: "Unbounded", sans-serif;
+    --font-pt-mono: "PT Mono", monospace;
+    --color-brand-primary: #6B80C5;
+    --color-brand-secondary: #C1D0FF;
+    --color-brand-tertiary: #DEE5FF;
+    --color-text-primary: #272727;
+    --color-text-secondary: #868686;
+    --color-border-subtle: #DFDFDF;
+    --color-background-primary: #FFFFFF;
+    --color-accent-primary: #FF91D2;
+    --color-accent-secondary: #FBC0E3;
+    --color-accent-tertiary: #FFE1F3;
+    --color-feedback-error: #E06F6F;
+  }
   body {
     font-family: var(--font-manrope);
-    color: var(--color-text-primary);
     background-color: var(--color-background-primary);
+    color: var(--color-text-primary);
   }
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-unbounded);
   }
+}
+.border {
+  border-style: var(--tw-border-style);
+  border-width: 1px;
 }
 @property --tw-border-style {
   syntax: "*";
