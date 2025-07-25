@@ -2,9 +2,10 @@
   "name": "admin",
   "private": true,
   "version": "0.0.0",
+  "lastUpdated": "2025-07-25T05:18:00+0500",
   "type": "module",
   "scripts": {
-    "dev": "node ./print-admin-banner.js && vite",
+    "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"

@@ -2,8 +2,9 @@
 // import "tsconfig-paths/register";
 const path = require("path");
 const fs = require("fs");
+import { printServerStop } from "@scripts/printServerStop";
 
-const pkgPath = path.resolve(__dirname, "../../../../package.json");
+const pkgPath = path.resolve(__dirname, "../package.json");
 const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf-8"));
 import express from "express";
 import React from "react";
@@ -62,15 +63,17 @@ app.listen(PORT, () => {
   console.log(`📦 Тип:                   SSR / статическая сборка`);
   console.log(`🧩 Рендеринг через:       PageRenderer`);
   console.log(`🕒 Последнее обновление:  ${pkg.lastUpdated}`);
-  console.log(`🧪 Версия билда:          ${pkg.buildVersion}`);
+  console.log(`🧪 Версия билда:          v${pkg.version}`);
   console.log(`📬 Обратная связь:        https://t.me/intragentt`);
   console.log(`🧠 Создан на платформе:   NABLUДATEL PLATFORM`);
   console.log("=".repeat(60) + "\n");
 });
 
 process.on("SIGINT", () => {
-  console.log("\n" + "=".repeat(60));
-  console.log("🛑 Сервер KYANCHIR остановлен вручную.");
-  console.log("============================================================\n");
+  printServerStop("kyanchir", pkg.lastUpdated, pkg.version);
+  process.exit(0);
+});
+process.on("SIGTERM", () => {
+  printServerStop("kyanchir", pkg.lastUpdated, pkg.version);
   process.exit(0);
 });
