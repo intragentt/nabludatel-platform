@@ -26,6 +26,13 @@
         }
       },
       {
+        "id": "comp-swiper-uuid",
+        "type": "SimpleSwiper",
+        "props": {
+          "slides": ["Слайд 1", "Слайд 2", "Слайд 3"]
+        }
+      },
+      {
         "id": "comp-catalog-uuid",
         "type": "CatalogContent",
         "props": {}
