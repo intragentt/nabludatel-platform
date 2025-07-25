@@ -10,6 +10,7 @@ import productsRouter from "./routes/products";
 import pagesRouter from "./routes/pages";
 import { requireAuth } from "./middlewares/authMiddleware";
 
+
 const app = express();
 const PORT = Number(process.env.PORT) || 3001;
 
@@ -45,5 +46,19 @@ app.use((req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`🚀 Backend запущен: http://localhost:${PORT}`);
+  console.clear();
+  console.log("\n" + "=".repeat(60));
+  console.log(`🧠 NABLUДАТЕЛЬ PLATFORM: BACKEND`);
+  console.log(`🌐 Сервер запущен на: http://localhost:${PORT}`);
+  console.log(`📂 API доступно по адресу: http://localhost:${PORT}/api`);
+  console.log(`📸 Загрузка файлов: http://localhost:${PORT}/api/upload`);
+  console.log(`✉️ Telegram: @intragentt`);
+  console.log("=".repeat(60) + "\n");
+});
+
+process.on("SIGINT", () => {
+  console.log("\n" + "=".repeat(60));
+  console.log("🛑 Сервер NABLUДATЕЛЬ остановлен вручную.");
+  console.log("=".repeat(60) + "\n");
+  process.exit(0);
 });

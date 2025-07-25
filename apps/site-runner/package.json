@@ -1,6 +1,8 @@
 {
-  "name": "site-runner",
+  "name": "kyanchir",
   "version": "0.0.1",
+  "lastUpdated": "2025-07-25T05:18:00+0500",
+  "buildVersion": "v1.0.0",
   "private": true,
   "scripts": {
     "build": "tsc --project tsconfig.json",

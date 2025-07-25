@@ -1,5 +1,10 @@
 // apps/site-runner/src/server.ts
 // import "tsconfig-paths/register";
+const path = require("path");
+const fs = require("fs");
+
+const pkgPath = path.resolve(__dirname, "../../../../package.json");
+const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf-8"));
 import express from "express";
 import React from "react";
 import ReactDOMServer from "react-dom/server";
@@ -50,5 +55,22 @@ app.get("/:siteDomain", async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`🏃 Site Runner запущен на порту ${PORT}`);
+  console.log("\n" + "=".repeat(60));
+  console.log(`🚀 САЙТ КЛИЕНТА KYANCHIR ЗАПУЩЕН`);
+  console.log(`🟢 Локальный адрес:       http://localhost:${PORT}`);
+  console.log(`🌐 Домен платформы:       kyanchir.ru`);
+  console.log(`📦 Тип:                   SSR / статическая сборка`);
+  console.log(`🧩 Рендеринг через:       PageRenderer`);
+  console.log(`🕒 Последнее обновление:  ${pkg.lastUpdated}`);
+  console.log(`🧪 Версия билда:          ${pkg.buildVersion}`);
+  console.log(`📬 Обратная связь:        https://t.me/intragentt`);
+  console.log(`🧠 Создан на платформе:   NABLUДATEL PLATFORM`);
+  console.log("=".repeat(60) + "\n");
+});
+
+process.on("SIGINT", () => {
+  console.log("\n" + "=".repeat(60));
+  console.log("🛑 Сервер KYANCHIR остановлен вручную.");
+  console.log("============================================================\n");
+  process.exit(0);
 });
