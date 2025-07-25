@@ -1,4 +1,5 @@
-// Местоположение: src/components/ProductCard.tsx
+// Компонент карточки товара.
+// Отображает две картинки и цену, формируя ссылку на страницу товара.
 import React from "react";
 import { formatPrice, PriceParts } from "./utils/formatPrice";
 import ImagePlaceholder from "./ImagePlaceholder";
@@ -17,6 +18,7 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
+  // Флаги ошибок загрузки изображений
   const img1Error = false;
   const img2Error = false;
 
@@ -24,6 +26,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   const imageUrl2 = product.imageUrls?.[1];
 
   const hasDiscount = product.oldPrice && product.oldPrice > 0;
+  // Форматируем цену для отображения
   const currentPrice: PriceParts | null = formatPrice(product.price);
   const oldPrice: PriceParts | null = hasDiscount
     ? formatPrice(product.oldPrice)
