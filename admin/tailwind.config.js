@@ -1,6 +1,12 @@
 /** @type {import('tailwindcss').Config} */
+import path from "path";
+
+const uiPackageEntryPoint = require.resolve("@nabudatel/ui");
+const uiPackageDir = path.dirname(uiPackageEntryPoint);
+const uiPackageSrcPath = path.join(uiPackageDir, "../src/**/*.{js,ts,jsx,tsx}");
+
 export default {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}", uiPackageSrcPath],
   theme: {
     extend: {
       fontFamily: {
