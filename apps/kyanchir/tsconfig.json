@@ -3,7 +3,7 @@
   "compilerOptions": {
     "composite": true,
     "outDir": "dist",
-    "rootDir": "src",
+    "rootDir": ".",
     "jsx": "react-jsx",
     "lib": [
       "ES2020",

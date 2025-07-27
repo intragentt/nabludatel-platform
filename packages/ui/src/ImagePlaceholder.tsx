@@ -1,5 +1,5 @@
 import React from "react";
-import ShortLogo from "./icons/ShortLogo";
+import ShortLogo from "./icons/ShortLogo.js";
 
 export default function ImagePlaceholder() {
   return (

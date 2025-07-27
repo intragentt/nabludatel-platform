@@ -2,6 +2,7 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "module": "commonjs", // Важно для Express.js
+    "moduleResolution": "node",
     "outDir": "dist",
     "baseUrl": ".", // Говорим, что точка отсчета - текущая папка
     "paths": {

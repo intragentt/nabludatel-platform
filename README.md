@@ -965,4 +965,8 @@ Sources: The architecture and approaches above are informed by best practices in
 	•	Monorepo organization using PNPM/Turborepo for multiple apps (admin, client, etc.) ￼ ￼
 	•	Vercel’s example of multi-tenant platform (subdomain routing, shared components, admin interface) ￼ ￼
 	•	Guidance on modular design and reusable templates for easy maintenance across sites ￼
-	•	Consideration of a super-admin tenant registry for tracking subscriptions and modules ￼.
+
+### Запуск минимального примера kyanchir
+1. `pnpm install`
+2. `pnpm dev` и открыть http://localhost:4000
+

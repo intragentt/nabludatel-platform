@@ -30,3 +30,8 @@ Thumbs.db
 # Специфичные для проекта исключения (КРИТИЧЕСКИ ВАЖНО!)
 backend/db/*.json
 backend/uploads/
+# TypeScript build info
+*.tsbuildinfo
+
+scripts/*.js
+scripts/*.d.ts
