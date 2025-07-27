@@ -1,64 +1,29 @@
-// kyanchir site PageRenderer
+// Файл: /apps/kyanchir/src/PageRenderer.tsx
 
 import React from "react";
-// Импортируем компоненты Header и CatalogContent из пакета UI
-import { Header, CatalogContent, SimpleSwiper, HeroSection, Footer } from "@nabudatel/ui";
-// Импортируем типы данных Product, Page, Site из пакета Core
-import type { Product, Page, Site } from "@nabudatel/core";
+// Импортируем только Header, больше ничего не нужно для минимальной страницы
+import { Header } from "@nabudatel/ui";
 
-// Словарь (map) для сопоставления имени компонента строкового типа с самим React-компонентом
-const componentsMap: { [key: string]: React.ComponentType<any> } = {
-  Header: Header,
-  CatalogContent: CatalogContent,
-  SimpleSwiper: SimpleSwiper,
-  HeroSection: HeroSection,
-  Footer: Footer,
-};
-
-// Интерфейс пропсов для PageRenderer
-interface PageRendererProps {
-  page: Page;            // Описание страницы (список компонентов, заголовок и т.д.)
-  products: Product[];   // Список продуктов, который передаётся в компонент CatalogContent
-  site: Site;            // Данные о сайте (например, название)
-}
-
-// Основной компонент-рендерер страницы.
-// Он принимает описание страницы, список продуктов и данные сайта,
-// и на его основе формирует полный HTML-документ.
-export default function PageRenderer({
-  page,
-  products,
-  site,
-}: PageRendererProps) {
+export default function PageRenderer() {
   return (
     <html>
       <head>
-        {/* Задаём мета-charset */}
         <meta charSet="utf-8" />
-        {/* Формируем title страницы: "<имя сайта> - <заголовок страницы>" */}
-        <title>{`${site.name} - ${page.title}`}</title>
-        {/* Подключаем скомпилированные стили Tailwind */}
+        <title>Клиентский Сайт (Минимум)</title>
+        {/* Подключаем стили, чтобы шапка выглядела правильно */}
         <link rel="stylesheet" href="/styles.css" />
       </head>
       <body>
         <div id="root">
-          {/* Перебираем массив компонентов, описанных в page.components */}
-          {page.components.map((comp) => {
-            // Выбираем React-компонент по его типу
-            const Component = componentsMap[comp.type];
-            if (!Component) {
-              // Если компонент не найден в словаре, отображаем сообщение об ошибке
-              return <div key={comp.id}>Компонент "{comp.type}" не найден</div>;
-            }
-            // Для компонента CatalogContent передаём дополнительно список products,
-            // для остальных компонентов используем их собственные props
-            const componentProps =
-              comp.type === "CatalogContent"
-                ? { ...comp.props, products }
-                : comp.props;
-            // Рендерим найденный компонент с переданными пропсами
-            return <Component key={comp.id} {...componentProps} />;
-          })}
+          <Header />
+          {/* Добавляем пустой основной блок, чтобы не было никаких ошибок */}
+          <main style={{ padding: "2rem", marginTop: "80px" }}>
+            <h1>Клиентский сайт запущен.</h1>
+            <p>
+              Сейчас отображается только шапка. Все остальные элементы временно
+              удалены.
+            </p>
+          </main>
         </div>
       </body>
     </html>

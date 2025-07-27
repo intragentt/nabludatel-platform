@@ -1,61 +1,23 @@
-// server for kyanchir site rendering
+// Файл: /apps/kyanchir/src/server.ts
 
 const path = require("path");
 const fs = require("fs");
 const { printServerStop } = require("../../../scripts/printServerStop.js");
-
-const pkgPath = path.resolve(__dirname, "../package.json");
-const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf-8"));
 import express from "express";
 import React from "react";
 import ReactDOMServer from "react-dom/server";
-import PageRenderer from "./PageRenderer.js";
+
+import PageRenderer from "./PageRenderer.js"; // <-- Важно: .js
 
 const app = express();
 app.use(express.static("public"));
 const PORT = 4000;
 
-app.get("/:siteDomain", async (req, res) => {
-  const { siteDomain } = req.params;
-
+app.get("*", (req, res) => {
   try {
-    if (siteDomain !== "kyanchir.platform.com") {
-      return res.status(404).send("Сайт не найден");
-    }
-    const siteId = "kyanchir-site-id";
-
-    const [siteRes, pageRes, productsRes] = await Promise.all([
-      fetch(`http://localhost:3001/api/sites/${siteId}`),
-      fetch(`http://localhost:3001/api/sites/${siteId}/pages/home`),
-      fetch(`http://localhost:3001/api/sites/${siteId}/products`),
-    ]);
-
-    if (!siteRes.ok || !pageRes.ok || !productsRes.ok) {
-      console.error("Ошибка при загрузке данных с бэкенда:", {
-        siteStatus: siteRes.status,
-        pageStatus: pageRes.status,
-        productsStatus: productsRes.status,
-      });
-      throw new Error("Не удалось загрузить данные с бэкенда");
-    }
-
-    const site = await siteRes.json();
-
-    // --- ИЗМЕНЕНИЕ: Добавлена проверка статуса сайта ---
-    if (site.status !== "active") {
-      return res
-        .status(403)
-        .send("<h1>Сайт временно отключен администратором.</h1>");
-    }
-    // --------------------------------------------------
-
-    const page = await pageRes.json();
-    const products = await productsRes.json();
-
     const html = ReactDOMServer.renderToString(
-      React.createElement(PageRenderer, { page, products, site })
+      React.createElement(PageRenderer)
     );
-
     res.send(`<!DOCTYPE html>${html}`);
   } catch (error) {
     console.error(error);
@@ -65,17 +27,14 @@ app.get("/:siteDomain", async (req, res) => {
   }
 });
 
+const pkgPath = path.resolve(__dirname, "../package.json");
+const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf-8"));
+
 app.listen(PORT, () => {
   console.log("\n" + "=".repeat(60));
   console.log(`🚀 САЙТ КЛИЕНТА KYANCHIR ЗАПУЩЕН`);
-  console.log(`🟢 Локальный адрес:       http://localhost:${PORT}`);
+  console.log(`🟢 Локальный адрес:       http://localhost:4000`);
   console.log(`🌐 Домен платформы:       kyanchir.ru`);
-  console.log(`📦 Тип:                   SSR / статическая сборка`);
-  console.log(`🧩 Рендеринг через:       PageRenderer`);
-  console.log(`🕒 Последнее обновление:  ${pkg.lastUpdated}`);
-  console.log(`🧪 Версия билда:          v${pkg.version}`);
-  console.log(`📬 Обратная связь:        https://t.me/intragentt`);
-  console.log(`🧠 Создан на платформе:   NABLUДATEL PLATFORM`);
   console.log("=".repeat(60) + "\n");
 });
 

@@ -1,5 +1,9 @@
+// Файл: /Users/intragentt/nabludatel.core/packages/ui/src/CatalogContent.tsx
+
 import React from "react";
-import ProductCard from "./ProductCard";
+// --- ИСПРАВЛЕНО ---
+import ProductCard from "./ProductCard.js"; // <-- Важно: добавлено .js
+// --------------------
 
 // Тип Product, возможно, нужно будет вынести в packages/core
 interface Product {

@@ -1,19 +1,31 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "composite": true, // ВАЖНО: Говорим, что этот цех - часть большого завода
+    "composite": true,
     "outDir": "dist",
     "rootDir": "src",
     "jsx": "react-jsx",
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "types": ["react", "node"],
-    "module": "ESNext",
-    "moduleResolution": "node"
+    "lib": [
+      "ES2020",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "types": [
+      "react",
+      "node"
+    ],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext"
   },
-  "include": ["src"],
-  // ВАЖНО: Здесь мы официально разрешаем общаться с другими цехами
+  "include": [
+    "src"
+  ],
   "references": [
-    { "path": "../../packages/ui" },
-    { "path": "../../packages/core" }
+    {
+      "path": "../../packages/ui"
+    },
+    {
+      "path": "../../packages/core"
+    }
   ]
 }

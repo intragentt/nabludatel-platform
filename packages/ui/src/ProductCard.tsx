@@ -1,9 +1,11 @@
-// Компонент карточки товара.
-// Отображает две картинки и цену, формируя ссылку на страницу товара.
+// Файл: /Users/intragentt/nabludatel.core/packages/ui/src/ProductCard.tsx
+
 import React from "react";
-import { formatPrice, PriceParts } from "./utils/formatPrice";
-import ImagePlaceholder from "./ImagePlaceholder";
-import HeartIcon from "./icons/HeartIcon";
+// --- ИСПРАВЛЕНО ---
+import { formatPrice, PriceParts } from "./utils/formatPrice.js";
+import ImagePlaceholder from "./ImagePlaceholder.js";
+import HeartIcon from "./icons/HeartIcon.js";
+// --------------------
 
 interface Product {
   id: string;
@@ -18,7 +20,6 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-  // Флаги ошибок загрузки изображений
   const img1Error = false;
   const img2Error = false;
 
@@ -26,7 +27,6 @@ export default function ProductCard({ product }: ProductCardProps) {
   const imageUrl2 = product.imageUrls?.[1];
 
   const hasDiscount = product.oldPrice && product.oldPrice > 0;
-  // Форматируем цену для отображения
   const currentPrice: PriceParts | null = formatPrice(product.price);
   const oldPrice: PriceParts | null = hasDiscount
     ? formatPrice(product.oldPrice)
