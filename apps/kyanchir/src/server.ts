@@ -1,8 +1,7 @@
 // Файл: /apps/kyanchir/src/server.ts
 
-const path = require("path");
-const fs = require("fs");
-const { printServerStop } = require("../../../scripts/printServerStop.js");
+import path from "path";
+import fs from "fs";
 import express from "express";
 import React from "react";
 import ReactDOMServer from "react-dom/server";
@@ -27,8 +26,6 @@ app.get("*", (req, res) => {
   }
 });
 
-const pkgPath = path.resolve(__dirname, "../package.json");
-const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf-8"));
 
 app.listen(PORT, () => {
   console.log("\n" + "=".repeat(60));
@@ -38,11 +35,3 @@ app.listen(PORT, () => {
   console.log("=".repeat(60) + "\n");
 });
 
-process.on("SIGINT", () => {
-  printServerStop("kyanchir", pkg.lastUpdated, pkg.version);
-  process.exit(0);
-});
-process.on("SIGTERM", () => {
-  printServerStop("kyanchir", pkg.lastUpdated, pkg.version);
-  process.exit(0);
-});

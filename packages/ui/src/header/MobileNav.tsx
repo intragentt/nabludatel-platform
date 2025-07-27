@@ -1,5 +1,5 @@
 import React from "react";
-import { NAV_LINKS } from "../config/navigation";
+import { NAV_LINKS } from "../config/navigation.js";
 
 type MobileNavProps = {
   isOpen: boolean;
