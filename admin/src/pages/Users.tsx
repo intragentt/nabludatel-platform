@@ -120,8 +120,10 @@ export default function UsersPage() {
     const formData = new FormData();
     formData.append("file", file);
 
+    const token = localStorage.getItem("token");
     const res = await fetch("http://localhost:3001/api/upload", {
       method: "POST",
+      headers: token ? { Authorization: `Bearer ${token}` } : undefined,
       body: formData,
     });
 
