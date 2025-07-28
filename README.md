@@ -969,4 +969,7 @@ Sources: The architecture and approaches above are informed by best practices in
 ### Запуск минимального примера kyanchir
 1. `pnpm install`
 2. `pnpm dev` и открыть http://localhost:4000
+   - Скрипт `predev:ui` теперь очищает не только каталог `packages/ui/dist`, но и файл
+     `packages/ui/tsconfig.tsbuildinfo`, чтобы TypeScript точно пересобрал библиотеку UI
+     перед запуском сервера.
 
