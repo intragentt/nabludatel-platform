@@ -973,3 +973,8 @@ Sources: The architecture and approaches above are informed by best practices in
      `packages/ui/tsconfig.tsbuildinfo`, чтобы TypeScript точно пересобрал библиотеку UI
      перед запуском сервера.
 
+   - Конфигурация Tailwind (`apps/kyanchir/tailwind.config.cjs`) содержит
+     `safelist` с классом `text-brand-lilac`, поэтому при изменениях в
+     компонентах UI цвета корректно попадают в итоговый `styles.css`.
+
+
