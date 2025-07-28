@@ -168,3 +168,6 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
     font-family: var(--font-unbounded);
   }
 }
+.relative {
+  position: relative;
+}
