@@ -7,7 +7,7 @@
   "type": "module",
   "scripts": {
     "dev:css": "tailwindcss -i ./src/app/globals.css -o ./public/styles.css --watch",
-    "predev:ui": "rm -rf ../../packages/ui/dist && pnpm --filter @nabudatel/ui build",
+    "predev:ui": "rm -rf ../../packages/ui/dist ../../packages/ui/tsconfig.tsbuildinfo && pnpm --filter @nabudatel/ui build",
     "dev:server": "nodemon --watch src --watch ../../packages/ui/src --ext ts,tsx --exec \"pnpm predev:ui && tsc && node dist/server.js\"",
     "dev": "concurrently \"pnpm:dev:css\" \"pnpm:dev:server\"",
     "build:css": "tailwindcss -i ./src/app/globals.css -o ./public/styles.css",
@@ -32,6 +32,7 @@
     "nodemon": "^3.1.0",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.11",
+    "@tailwindcss/line-clamp": "^0.4.4",
     "tsx": "^4.20.3",
     "typescript": "^5.4.5"
   }
