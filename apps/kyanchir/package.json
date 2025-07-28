@@ -7,7 +7,7 @@
   "type": "module",
   "scripts": {
     "dev:css": "tailwindcss -i ./src/app/globals.css -o ./public/styles.css --watch",
-    "predev:ui": "rm -rf ../../packages/ui/dist && pnpm --filter @nabudatel/ui build",
+    "predev:ui": "rm -rf ../../packages/ui/dist ../../packages/ui/tsconfig.tsbuildinfo && pnpm --filter @nabudatel/ui build",
     "dev:server": "nodemon --watch src --watch ../../packages/ui/src --ext ts,tsx --exec \"pnpm predev:ui && tsc && node dist/server.js\"",
     "dev": "concurrently \"pnpm:dev:css\" \"pnpm:dev:server\"",
     "build:css": "tailwindcss -i ./src/app/globals.css -o ./public/styles.css",
