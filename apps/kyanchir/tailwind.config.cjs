@@ -4,6 +4,10 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
     "../../packages/ui/src/**/*.{js,ts,jsx,tsx}",
   ],
+  safelist: [
+    // гарантируем, что ключевые цвета из UI-пакета всегда попадают в итоговый CSS
+    'text-brand-lilac',
+  ],
   theme: {
     screens: {
       sm: "640px",
