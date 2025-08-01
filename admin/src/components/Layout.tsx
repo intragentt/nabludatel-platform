@@ -1,40 +1,88 @@
-import { useEffect, useState } from "react";
-import { Outlet, useNavigate, useLocation } from "react-router-dom";
-import { jwtDecode } from "jwt-decode"; // npm install jwt-decode в папке admin
+// ============================================================================
+// src/components/Layout.tsx - КАРКАС И ОХРАННИК ПРИЛОЖЕНИЯ
+// ============================================================================
+// Этот компонент выполняет две важнейшие задачи:
+// 1. "Каркас": Он создает общий внешний вид (шапка, подвал, меню),
+//    в который "вставляются" все остальные страницы.
+// 2. "Охранник": Он проверяет, есть ли у пользователя "пропуск" (JWT-токен)
+//    и какой у него "уровень доступа" (роль). Если пропуска нет -
+//    он не пускает в админку и отправляет на страницу логина.
+// ============================================================================
 
+// --- 1. ИМПОРТЫ ---
+
+import { useEffect, useState } from "react";
+// useEffect и useState - это базовые "инструменты" React для работы
+// с логикой (эффектами) и памятью (состоянием) компонента.
+
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
+// Инструменты от "GPS-системы" (React Router):
+// - Outlet: "Портал" или "место для вставки", куда будут рендериться наши страницы.
+// - useNavigate: "Пульт управления навигацией", позволяет программно переключать страницы.
+// - useLocation: "Датчик", который сообщает, на какой странице (URL) мы сейчас находимся.
+
+import { jwtDecode } from "jwt-decode"; // "Дешифровщик" для наших "пропусков" (JWT-токенов).
+
+// --- 2. ЧЕРТЕЖИ И ТИПЫ ---
+
+// Создаем "чертеж" (интерфейс) для нашего расшифрованного токена.
+// Это помогает TypeScript понимать, какие данные внутри токена есть.
 interface DecodedToken {
   id: string;
   role: "superadmin" | "client" | "admin";
-  iat: number;
-  exp: number;
+  iat: number; // Время создания токена
+  exp: number; // Время истечения срока действия токена
 }
 
+// ============================================================================
+// --- КОМПОНЕНТ Layout ---
+// ============================================================================
+
 const Layout = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
+  // --- 3. ИНИЦИАЛИЗАЦИЯ ---
+
+  const navigate = useNavigate(); // Получаем "пульт управления" навигацией.
+  const location = useLocation(); // Узнаем текущий URL.
+
+  // Создаем "ячейку памяти" для хранения роли пользователя.
+  // Изначально она пустая (null).
   const [userRole, setUserRole] = useState<string | null>(null);
 
+  // --- 4. ГЛАВНЫЙ ЭФФЕКТ: ПРОВЕРКА АВТОРИЗАЦИИ ("ФЕЙС-КОНТРОЛЬ") ---
+  // Этот блок кода выполняется один раз при загрузке компонента и каждый
+  // раз, когда меняется URL страницы (location.pathname).
+
   useEffect(() => {
+    // 1. Ищем "пропуск" (токен) в "кармане" браузера (localStorage).
     const token = localStorage.getItem("token");
+
+    // 2. Если "пропуска" нет...
     if (!token) {
-      if (location.pathname !== "/login") {
-        navigate("/login"); // Перенаправляем на логин, если токена нет
-      }
-      return;
+      // ...немедленно отправляем пользователя на страницу входа.
+      navigate("/login");
+      return; // Прекращаем выполнение дальнейшего кода.
     }
 
+    // 3. Если "пропуск" есть, пытаемся его расшифровать.
     try {
+      // Используем "дешифровщик".
       const decoded = jwtDecode<DecodedToken>(token);
+      // Запоминаем роль пользователя из "пропуска" в нашу "ячейку памяти".
       setUserRole(decoded.role);
     } catch (error) {
+      // 4. Если "пропуск" оказался поддельным или испорченным...
       console.error("Ошибка декодирования токена:", error);
-      localStorage.removeItem("token"); // Токен невалиден, удаляем
+      // ...уничтожаем фальшивый "пропуск".
+      localStorage.removeItem("token");
+      // ...и тоже отправляем пользователя на вход.
       navigate("/login");
     }
-  }, [navigate, location.pathname]);
+  }, [navigate, location.pathname]); // Зависимости эффекта
 
-  // Если пользователь ещё не залогинен или токен не декодирован, и мы не на странице логина
-  if (!userRole && location.pathname !== "/login") {
+  // --- 5. ЭКРАН ЗАГРУЗКИ ---
+  // Пока мы проверяем "пропуск" и роль еще не установлена,
+  // показываем пользователю экран загрузки, чтобы он не видел "пустую" страницу.
+  if (!userRole) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         Загрузка...
@@ -42,67 +90,82 @@ const Layout = () => {
     );
   }
 
-  // Базовая навигация
+  // --- 6. ДИНАМИЧЕСКАЯ НАВИГАЦИЯ ---
+  // Собираем "карту" ссылок для меню.
+
+  // Ссылки, которые видны всем авторизованным пользователям.
   const links = [
     { to: "/", label: "Дашборд" },
     { to: "/users", label: "Пользователи" },
     { to: "/sites", label: "Сайты" },
   ];
 
-  // Настройки доступны только superadmin
+  // Если у пользователя "уровень доступа" superadmin...
   if (userRole === "superadmin") {
+    // ...добавляем ему "секретный" путь к настройкам.
     links.push({ to: "/settings", label: "Настройки" });
   }
 
+  // --- 7. ОТРИСОВКА КОМПОНЕНТА (JSX) ---
   return (
     <div className="min-h-screen flex flex-col font-sans w-full">
-      {location.pathname === "/login" ? (
-        <Outlet />
-      ) : (
-        <>
-          <header className="bg-gray-800 text-white p-4 flex items-center justify-between">
-            <h1
-              className="text-xl font-bold cursor-pointer"
-              onClick={() => navigate("/")}
-            >
-              Admin Panel
-            </h1>
+      {/* 
+        ШАПКА (Header)
+        Отображается на всех страницах.
+      */}
+      <header className="bg-gray-800 text-white p-4 flex items-center justify-between">
+        <h1
+          className="text-xl font-bold cursor-pointer"
+          onClick={() => navigate("/")}
+        >
+          Admin Panel
+        </h1>
 
-            <nav className="space-x-4">
-              {links.map(({ to, label }) => (
-                <button
-                  key={to}
-                  onClick={() => navigate(to)}
-                  className={`px-3 py-1 rounded ${
-                    location.pathname === to ? "bg-gray-700" : "hover:bg-gray-700"
-                  }`}
-                >
-                  {label}
-                </button>
-              ))}
-            </nav>
-
+        {/* Навигационное меню, построенное на основе нашей "карты" ссылок */}
+        <nav className="space-x-4">
+          {links.map(({ to, label }) => (
             <button
-              onClick={() => {
-                localStorage.removeItem("token"); // Удаляем токен при выходе
-                localStorage.removeItem("role"); // Очищаем старую роль (если была)
-                navigate("/login");
-              }}
-              className="bg-red-600 px-3 py-1 rounded hover:bg-red-700"
+              key={to}
+              onClick={() => navigate(to)}
+              className={`px-3 py-1 rounded ${
+                location.pathname === to ? "bg-gray-700" : "hover:bg-gray-700"
+              }`}
             >
-              Выйти
+              {label}
             </button>
-          </header>
+          ))}
+        </nav>
 
-          <main className="flex-grow bg-gray-100 p-6">
-            <Outlet />
-          </main>
+        {/* Кнопка выхода */}
+        <button
+          onClick={() => {
+            // При выходе стираем "пропуск" из "кармана" браузера...
+            localStorage.removeItem("token");
+            // ...и отправляем пользователя на страницу входа.
+            navigate("/login");
+          }}
+          className="bg-red-600 px-3 py-1 rounded hover:bg-red-700"
+        >
+          Выйти
+        </button>
+      </header>
 
-          <footer className="bg-gray-800 text-white p-4 text-center">
-            © 2025 nabludatel.core
-          </footer>
-        </>
-      )}
+      {/* 
+        ОСНОВНОЕ СОДЕРЖИМОЕ (Main)
+        Это и есть тот самый "портал" <Outlet />.
+        React Router вставит сюда нужную страницу (`UsersPage`, `SitesPage` и т.д.).
+      */}
+      <main className="flex-grow bg-gray-100 p-6">
+        <Outlet />
+      </main>
+
+      {/* 
+        ПОДВАЛ (Footer)
+        Также отображается на всех страницах.
+      */}
+      <footer className="bg-gray-800 text-white p-4 text-center">
+        © 2025 nabludatel.core
+      </footer>
     </div>
   );
 };

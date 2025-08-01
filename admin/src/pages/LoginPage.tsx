@@ -1,42 +1,72 @@
+// ============================================================================
+// src/pages/LoginPage.tsx - "ПРОПУСКНОЙ ПУНКТ" В АДМИН-ПАНЕЛЬ
+// ============================================================================
+// Эта страница отвечает за аутентификацию пользователя. Она представляет
+// собой форму входа, отправляет данные на бэкенд и, в случае успеха,
+// сохраняет "пропуск" (токен) и перенаправляет внутрь админки.
+// ============================================================================
+
+// --- 1. ИМПОРТЫ ---
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import AuthLayout from "../components/AuthLayout";
+import AuthLayout from "../components/AuthLayout"; // Импортируем нашу "сцену" для центрирования.
 
+// ============================================================================
+// --- КОМПОНЕНТ LoginPage ---
+// ============================================================================
 export default function LoginPage() {
+  // --- 2. СОСТОЯНИЕ КОМПОНЕНТА ("ПАМЯТЬ ФОРМЫ") ---
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const navigate = useNavigate();
+  const [error, setError] = useState(""); // Ячейка для хранения текста ошибки.
+  const navigate = useNavigate(); // "Пульт" для перенаправления.
 
+  // --- 3. ЛОГИКА (ОБРАБОТЧИК ОТПРАВКИ ФОРМЫ) ---
   const handleLogin = async (e: React.FormEvent) => {
+    // e.preventDefault() - это важнейшая команда. Она отменяет
+    // стандартное поведение браузера (перезагрузку страницы) при отправке формы.
     e.preventDefault();
 
     try {
+      // Отправляем "заявление на пропуск" на бэкенд.
+      // ❗️ В будущем этот вызов будет выглядеть как `api.auth.login({ email, password })`.
       const res = await fetch("http://localhost:3001/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
 
+      // Если сервер ответил ошибкой (например, "неверный пароль")...
       if (!res.ok) {
         const err = await res.json();
+        // ...выбрасываем ошибку с текстом от сервера.
         throw new Error(err.error || "Ошибка входа");
       }
 
+      // Если всё успешно...
       const data = await res.json();
+      // ...получаем наш "пропуск" (токен) и кладем его в "карман" браузера (localStorage).
       localStorage.setItem("token", data.token);
-      navigate("/users");
+      // ...и "телепортируем" пользователя внутрь админки.
+      navigate("/users"); // ❗️ Можно изменить на `/` или `/dashboard` в будущем.
     } catch (err: unknown) {
+      // "Ловушка" для всех ошибок (и от сервера, и от сети).
       if (err instanceof Error) {
-        setError(err.message);
+        setError(err.message); // Показываем ошибку пользователю.
       } else {
-        setError("Ошибка входа");
+        setError("Произошла неизвестная ошибка");
       }
     }
   };
 
+  // --- 4. ОТРИСОВКА (JSX) ---
   return (
+    // Используем нашу "сцену", чтобы красиво отцентрировать форму.
     <AuthLayout>
+      {/* 
+        Это сама форма. onSubmit - это событие, которое срабатывает
+        при нажатии на кнопку типа "submit" внутри этой формы.
+      */}
       <form
         onSubmit={handleLogin}
         className="w-[90%] max-w-md sm:max-w-lg mx-auto bg-white rounded-xl shadow-lg border border-gray-200 p-10 flex flex-col gap-8 font-sans"
@@ -45,12 +75,14 @@ export default function LoginPage() {
           Вход
         </h2>
 
+        {/* Блок для отображения ошибки. Появляется, только если `error` не пустой. */}
         {error && (
           <p className="text-red-600 bg-red-100 rounded-md p-3 text-center text-sm font-medium select-none">
             {error}
           </p>
         )}
 
+        {/* Поле для ввода Email */}
         <div className="flex flex-col gap-2">
           <label
             htmlFor="email"
@@ -65,11 +97,12 @@ export default function LoginPage() {
             className="rounded-md border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            required
-            autoComplete="username"
+            required // Поле обязательно для заполнения.
+            autoComplete="username" // Подсказка для браузера, чтобы он мог подставить логин.
           />
         </div>
 
+        {/* Поле для ввода пароля */}
         <div className="flex flex-col gap-2">
           <label
             htmlFor="password"
@@ -85,10 +118,11 @@ export default function LoginPage() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            autoComplete="current-password"
+            autoComplete="current-password" // Подсказка для браузера, чтобы он мог подставить пароль.
           />
         </div>
 
+        {/* Кнопка отправки формы */}
         <button
           type="submit"
           className="w-full bg-indigo-600 text-white py-3 rounded-md font-semibold hover:bg-indigo-700 active:bg-indigo-800 transition focus:outline-none focus:ring-2 focus:ring-indigo-400"

@@ -1,39 +1,41 @@
+// ============================================================================
+// routes/upload.ts - "ОТДЕЛ ПРИЕМА ПОСЫЛОК" (Загрузка Файлов) - ИСПРАВЛЕННАЯ ВЕРСИЯ
+// ============================================================================
+// Этот файл определяет маршрут для загрузки файлов на сервер.
+// ============================================================================
+
 import express from "express";
-import fs from "fs";
-import { uploadsPath } from "../utils/paths";
+// ✅ ПРАВИЛЬНЫЙ ПУТЬ: Импортируем нашего готового "профессионального грузчика".
 import { uploadSingleImage } from "../middlewares/uploadMiddleware";
-import multer from "multer";
 
 const router = express.Router();
 
-if (!fs.existsSync(uploadsPath)) {
-  fs.mkdirSync(uploadsPath, { recursive: true });
-}
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, uploadsPath);
-  },
-  filename: (req, file, cb) => {
-    cb(null, `${Date.now()}-${file.originalname}`);
-  },
-});
-
-const upload = multer({
-  storage,
-  limits: { fileSize: 2 * 1024 * 1024 }, // 2MB
-});
-
-router.post("/", upload.single("file"), (req, res) => {
+// ============================================================================
+// --- МАРШРУТ: POST /api/upload ---
+// ============================================================================
+// 1. `uploadSingleImage` - это наш middleware-"грузчик". Он первым
+//    перехватывает запрос, сохраняет файл и добавляет информацию о нем в `req.file`.
+// 2. `(req, res) => { ... }` - этот обработчик выполнится ТОЛЬКО ПОСЛЕ
+//    того, как "грузчик" успешно завершит свою работу.
+router.post("/", uploadSingleImage, (req, res) => {
+  // Если `req.file` не существует, значит "грузчик" не нашел файл или отклонил его.
   if (!req.file) {
-    return res.status(400).json({ error: "Файл не загружен" });
+    return res
+      .status(400)
+      .json({ error: "Файл не загружен или не соответствует требованиям" });
   }
+
+  // Создаем публичный URL, по которому можно будет получить доступ к файлу.
+  // ❗️ Адрес сервера "зашит". Его следует вынести в переменные окружения.
   const fileUrl = `http://localhost:3001/uploads/${req.file.filename}`;
+
   console.log(
-    `[${new Date().toISOString()}] File uploaded: ${fileUrl}, by IP=${
+    `[UPLOAD] File uploaded: ${fileUrl}, by IP=${
       req.ip || req.connection.remoteAddress
     }`
   );
+
+  // Возвращаем URL клиенту.
   res.json({ url: fileUrl });
 });
 

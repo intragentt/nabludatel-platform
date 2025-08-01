@@ -1,15 +1,42 @@
-import multer from "multer";
-import path from "path";
-import { v4 as uuidv4 } from "uuid";
-import { uploadsPath } from "../utils/paths";
+// ============================================================================
+// config/multer.ts - "ЧЕРТЕЖИ И ИНСТРУКЦИИ" ДЛЯ ГРУЗЧИКА (MULTER)
+// ============================================================================
+// Этот файл содержит основную конфигурацию для библиотеки `multer`.
+// `multer` - это middleware для Express, которое облегчает загрузку файлов
+// на сервер. Здесь мы определяем, как именно будут сохраняться файлы.
+// ============================================================================
 
+import multer from "multer"; // Импортируем сам `multer`.
+import path from "path"; // Модуль Node.js для работы с путями к файлам.
+import { v4 as uuidv4 } from "uuid"; // Библиотека для генерации уникальных ID.
+import { uploadsPath } from "../utils/paths"; // Наш централизованный путь к папке загрузок.
+
+// --- 3. КОНФИГУРАЦИЯ ХРАНЕНИЯ (STORAGE) ---
+// Это сердце `multer`. Здесь мы говорим, куда сохранять файлы и как их называть.
 const storage = multer.diskStorage({
-  destination: (_req, _file, cb) => cb(null, uploadsPath),
+  // --- destination ---
+  // Функция, которая определяет папку, куда будет помещен файл.
+  destination: (_req, _file, cb) => {
+    // `cb` - это callback-функция. Мы вызываем ее с `null` (нет ошибки)
+    // и указываем путь к нашей папке `uploads`.
+    cb(null, uploadsPath);
+  },
+
+  // --- filename ---
+  // Функция, которая определяет, как будет называться сохраненный файл.
   filename: (_req, file, cb) => {
+    // Получаем расширение оригинального файла (например, ".png", ".jpg").
     const ext = path.extname(file.originalname);
+    // Генерируем уникальное имя файла, используя UUID (Universally Unique Identifier).
+    // Это гарантирует, что каждый файл будет иметь уникальное имя,
+    // даже если у них одинаковые оригинальные названия.
     const filename = `${uuidv4()}${ext}`;
-    cb(null, filename);
+    cb(null, filename); // Передаем сгенерированное имя файла.
   },
 });
 
+// --- 4. ЭКЗЕМПЛЯР MULTER ---
+// Создаем экземпляр `multer`, передавая ему нашу конфигурацию `storage`.
+// Теперь этот объект `upload` можно использовать как middleware для обработки
+// файлов в наших маршрутах.
 export const upload = multer({ storage });

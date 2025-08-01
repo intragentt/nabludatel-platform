@@ -1,22 +1,16 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
-
-node_modules
-dist
-dist-ssr
-*.local
-
-# Editor directories and files
+# Игнорируем всё в папке .vscode,
+# КРОМЕ файла с рекомендованными расширениями, чтобы он был общим для команды.
 .vscode/*
 !.vscode/extensions.json
-.idea
-.DS_Store
+
+# Игнорируем специфичные для админки результаты сборки,
+# например, для Server-Side Rendering, если он будет добавлен.
+dist-ssr
+
+# Игнорируем локальные файлы-переопределения (например, .env.local).
+*.local
+
+# Игнорируем специфичные для Windows файлы редакторов Visual Studio.
 *.suo
 *.ntvs*
 *.njsproj

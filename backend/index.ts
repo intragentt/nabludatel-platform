@@ -1,6 +1,5 @@
 // /backend/index.ts
 // Главный файл запуска Express-сервера.
-// Здесь подключаются все маршруты и middleware.
 import express from "express";
 import cors from "cors";
 import path from "path";
@@ -14,16 +13,31 @@ import productsRouter from "./routes/products";
 import pagesRouter from "./routes/pages";
 import { requireAuth } from "./middlewares/authMiddleware";
 
-
 const app = express();
 const PORT = Number(process.env.PORT) || 3001;
 
-// Разрешаем CORS
+// ✅ Разрешённые домены — укажи реальные в проде
+const allowedOrigins = [
+  "http://localhost:5173", // админка локально
+  "http://localhost:3000", // сайт клиента локально
+  "https://admin.nabludatel.com",
+  "https://kyanchir.com",
+];
+
+// ✅ Гибкий CORS
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: (origin, callback) => {
+      // Разрешаем только whitelisted домены
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error(`CORS: доступ с ${origin} запрещён`));
+      }
+    },
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
   })
 );
 
@@ -33,24 +47,23 @@ app.use(express.json());
 // Раздача статики для загруженных файлов
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-// Публичные маршруты, доступные без авторизации.
-// Здесь клиент получает страницы и информацию о сайтах.
+// ======= Публичные маршруты, не требуют авторизации =======
 app.use("/api/auth", authRouter);
-app.use("/api/sites", publicSitesRouter); // <-- Для публичной инфы о сайте
-app.use("/api/sites", pagesRouter); // <-- Для публичных страниц
-app.use("/api/sites", productsRouter); // <-- Для публичных продуктов
+app.use("/api/sites", publicSitesRouter); // данные для клиента
+app.use("/api/sites", pagesRouter);
+app.use("/api/sites", productsRouter);
 
-// Защищённые маршруты админки. Все они требуют валидный JWT.
+// ======= Защищённые маршруты — только с валидным токеном =======
 app.use("/api/users", requireAuth, usersRouter);
 app.use("/api/upload", requireAuth, uploadRouter);
-// Отдельный префикс /api/admin для управления сайтами через админку.
-app.use("/api/admin/sites", requireAuth, adminSitesRouter);
+app.use("/api/admin/sites", requireAuth, adminSitesRouter); // всё управление сайтом
 
-// Обработка 404 - неизвестных маршрутов
+// ======= Обработка 404 =======
 app.use((req, res) => {
   res.status(404).json({ error: "Неизвестный маршрут" });
 });
 
+// ======= Запуск сервера =======
 app.listen(PORT, () => {
   console.clear();
   console.log("\n" + "=".repeat(60));
@@ -58,18 +71,17 @@ app.listen(PORT, () => {
   console.log(`🌐 Сервер запущен на: http://localhost:${PORT}`);
   console.log(`📂 API доступно по адресу: http://localhost:${PORT}/api`);
   console.log(`📸 Загрузка файлов: http://localhost:${PORT}/api/upload`);
-  console.log(`🕒 Последнее обновление:  ${pkg.lastUpdated}`);
   console.log(`🧪 Версия билда:          v${pkg.version}`);
   console.log(`✉️ Telegram: @intragentt`);
   console.log("=".repeat(60) + "\n");
 });
 
-// Красиво завершаем работу по сигналам ОС
+// Красиво завершаем работу
 process.on("SIGINT", () => {
-  printServerStop("backend", pkg.lastUpdated, pkg.version);
+  printServerStop("backend", null, pkg.version);
   process.exit(0);
 });
 process.on("SIGTERM", () => {
-  printServerStop("backend", pkg.lastUpdated, pkg.version);
+  printServerStop("backend", null, pkg.version);
   process.exit(0);
 });

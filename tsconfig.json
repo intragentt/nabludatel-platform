@@ -11,9 +11,8 @@
   },
   "files": [],
   "references": [
-    { "path": "admin" }, 
+    { "path": "admin" },
     { "path": "backend" },
-    { "path": "apps/kyanchir" },
     { "path": "packages/core" },
     { "path": "packages/ui" }
   ]

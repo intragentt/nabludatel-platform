@@ -1,11 +1,11 @@
 [
   {
-    "id": "kyanchir-site-id",
+    "id": "kyanchir",
     "name": "Kyanchir Boutique",
     "ownerUserId": 4,
     "domain": "kyanchir.platform.com",
     "plan": "pro",
-    "status": "active",
+    "status": "disabled",
     "createdAt": "2024-07-01T10:00:00Z"
   },
   {
@@ -14,7 +14,7 @@
     "ownerUserId": 4,
     "domain": "test.platform.com",
     "plan": "free",
-    "status": "disabled",
+    "status": "active",
     "createdAt": "2024-07-10T11:30:00Z"
   }
 ]

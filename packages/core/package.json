@@ -1,5 +1,5 @@
 {
-  "name": "@nabudatel/core",
+  "name": "@nabludatel/core",
   "version": "0.0.1",
   "private": true,
   "type": "module",
@@ -9,6 +9,10 @@
     "build": "tsc"
   },
   "devDependencies": {
+    "@types/git-rev-sync": "^2.0.2",
     "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "git-rev-sync": "^3.0.2"
   }
 }
